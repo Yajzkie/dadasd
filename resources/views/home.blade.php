@@ -1,221 +1,361 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'COTS Southern Leyte')</title>
+    <style>
+        /* Include your CSS here */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
 
-@section('content')
+        .header {
+            background-image: url('{{ asset('images/background.jpg') }}');
+            background-size: cover;
+            height: 100vh;
+            position: relative;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 57px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-top: 20px;
+        }
+
+        .header p {
+            max-width: 20%;
+            margin: auto 80px 20px auto;
+            font-size: 1.3em;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0);
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .nav {
+            background-color: #333;
+            padding: 10px 0;
+            text-align: right;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .content {
+            padding: 20px;
+            background-color: #e0f7fa;
+            text-align: center;
+            height: auto;
+        }
+
+        .content h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .content .species-images img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        .contact-info {
+            padding: 20px;
+            background-color: #b2ebf2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-info .details {
+            text-align: left;
+        }
+
+        .contact-info .details .img {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .contact-info .details img {
+            width: 150px;
+            height: auto;
+        }
+
+        .contact-info .details .info p {
+            text-align: center;
+            display: flex;
+        }
+
+        .map {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            margin: 20px auto;
+            flex-wrap: wrap;
+        }
+
+        .map img {
+            width: 100%;
+            max-width: 48%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .map p {
+            max-width: 48%;
+            font-size: 1.5em;
+            padding: 10px;
+            background-color: rgb(224, 247, 250);
+            border-radius: 5px;
+            text-align: left;
+            margin-left: auto;
+        }
+
+        .footer {
+            padding: 10px;
+            background-color: #555;
+            color: white;
+            font-size: 0.9em;
+            text-align: center;
+            position: initial;
+            bottom: 0;
+            width: 100%;
+        }
+
+
+        .btn-login {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            display: inline-block;
+        }
+
+        .btn-login:hover {
+            background-color: #0056b3;
+        }
+
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .nav a {
+                margin: 0 10px;
+                font-size: 0.8em;
+            }
+
+            .content h2 {
+                font-size: 1.5em;
+            }
+
+            .contact-info .details div {
+                flex-direction: column;
+            }
+
+            .contact-info .details img {
+                width: 40px;
+            }
+
+            .map p {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .header p {
+                font-size: 0.9em;
+            }
+
+            .nav a {
+                margin: 0 5px;
+                font-size: 0.7em;
+            }
+
+            .content h2 {
+                font-size: 1.2em;
+            }
+
+            .contact-info .details img {
+                width: 30px;
+            }
+
+            .map p {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+
+    
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+
+</head>
+
+
 <body>
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
-      <div class="layout-container">
-        <!-- Menu -->
+    <div class="nav">
+        <a href="{{ url('/') }}">Home</a>
+        <a href="#">COTS</a>
+        <a href="#">Illegal Fishing</a>
+        <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</a>
 
-        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-          <div class="app-brand demo">
-            <a href="{{route('home')}}" class="app-brand-link">
-              <span class="app-brand-logo demo">
-                <svg
-                  width="25"
-                  viewBox="0 0 25 42"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                  <defs>
-                    <path
-                      d="M13.7918663,0.358365126 L3.39788168,7.44174259 C0.566865006,9.69408886 -0.379795268,12.4788597 0.557900856,15.7960551 C0.68998853,16.2305145 1.09562888,17.7872135 3.12357076,19.2293357 C3.8146334,19.7207684 5.32369333,20.3834223 7.65075054,21.2172976 L7.59773219,21.2525164 L2.63468769,24.5493413 C0.445452254,26.3002124 0.0884951797,28.5083815 1.56381646,31.1738486 C2.83770406,32.8170431 5.20850219,33.2640127 7.09180128,32.5391577 C8.347334,32.0559211 11.4559176,30.0011079 16.4175519,26.3747182 C18.0338572,24.4997857 18.6973423,22.4544883 18.4080071,20.2388261 C17.963753,17.5346866 16.1776345,15.5799961 13.0496516,14.3747546 L10.9194936,13.4715819 L18.6192054,7.984237 L13.7918663,0.358365126 Z"
-                      id="path-1"
-                    ></path>
-                    <path
-                      d="M5.47320593,6.00457225 C4.05321814,8.216144 4.36334763,10.0722806 6.40359441,11.5729822 C8.61520715,12.571656 10.0999176,13.2171421 10.8577257,13.5094407 L15.5088241,14.433041 L18.6192054,7.984237 C15.5364148,3.11535317 13.9273018,0.573395879 13.7918663,0.358365126 C13.5790555,0.511491653 10.8061687,2.3935607 5.47320593,6.00457225 Z"
-                      id="path-3"
-                    ></path>
-                    <path
-                      d="M7.50063644,21.2294429 L12.3234468,23.3159332 C14.1688022,24.7579751 14.397098,26.4880487 13.008334,28.506154 C11.6195701,30.5242593 10.3099883,31.790241 9.07958868,32.3040991 C5.78142938,33.4346997 4.13234973,34 4.13234973,34 C4.13234973,34 2.75489982,33.0538207 2.37032616e-14,31.1614621 C-0.55822714,27.8186216 -0.55822714,26.0572515 -4.05231404e-15,25.8773518 C0.83734071,25.6075023 2.77988457,22.8248993 3.3049379,22.52991 C3.65497346,22.3332504 5.05353963,21.8997614 7.50063644,21.2294429 Z"
-                      id="path-4"
-                    ></path>
-                    <path
-                      d="M20.6,7.13333333 L25.6,13.8 C26.2627417,14.6836556 26.0836556,15.9372583 25.2,16.6 C24.8538077,16.8596443 24.4327404,17 24,17 L14,17 C12.8954305,17 12,16.1045695 12,15 C12,14.5672596 12.1403557,14.1461923 12.4,13.8 L17.4,7.13333333 C18.0627417,6.24967773 19.3163444,6.07059163 20.2,6.73333333 C20.3516113,6.84704183 20.4862915,6.981722 20.6,7.13333333 Z"
-                      id="path-5"
-                    ></path>
-                  </defs>
-                  <g id="g-app-brand" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g id="Brand-Logo" transform="translate(-27.000000, -15.000000)">
-                      <g id="Icon" transform="translate(27.000000, 15.000000)">
-                        <g id="Mask" transform="translate(0.000000, 8.000000)">
-                          <mask id="mask-2" fill="white">
-                            <use xlink:href="#path-1"></use>
-                          </mask>
-                          <use fill="#696cff" xlink:href="#path-1"></use>
-                          <g id="Path-3" mask="url(#mask-2)">
-                            <use fill="#696cff" xlink:href="#path-3"></use>
-                            <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-3"></use>
-                          </g>
-                          <g id="Path-4" mask="url(#mask-2)">
-                            <use fill="#696cff" xlink:href="#path-4"></use>
-                            <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-4"></use>
-                          </g>
-                        </g>
-                        <g
-                          id="Triangle"
-                          transform="translate(19.000000, 11.000000) rotate(-300.000000) translate(-19.000000, -11.000000) "
-                        >
-                          <use fill="#696cff" xlink:href="#path-5"></use>
-                          <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-5"></use>
-                        </g>
-                      </g>
-                    </g>
-                  </g>
-                </svg>
-              </span>
-              <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
-            </a>
-            <span class="name-text ms-5">{{ Auth::user()->name }}</span>
-               
-            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-              <i class="bx bx-chevron-left bx-sm align-middle"></i>
-            </a>
-          </div>
+    </div>
+    <div>
+    <div class="header">
+        <h1>Welcome to [Your Website Name]</h1>
+        <p>Your go-to resource for Commercial Off-The-Shelf (COTS) solutions. Explore our comprehensive range of COTS products designed to streamline your operations, reduce costs, and enhance efficiency. From software to hardware, our expert-curated selections meet diverse needs with proven reliability and performance. Get insights and make informed decisions with our detailed reports available at the end of each product description. Dive in and discover how COTS can transform your business today!</p>
+    </div>
 
-          <div class="menu-inner-shadow"></div>
+    <div class="content">
+        <h2>Most Dangerous Species</h2>
+        <div class="species-images">
+            <img src="{{ asset('images/cots1.jpg') }}" alt="Species 1">
+            <img src="{{ asset('images/cots2.jpg') }}" alt="Species 2">
+            <img src="{{ asset('images/cots1.jpg') }}" alt="Species 3">
+        </div>
 
-          <ul class="menu-inner py-1">
-            <!-- Dashboard -->
-            <li class="menu-item active">
-              <a href="{{route('home')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Dashboard</div>
-              </a>
-            </li>
-            <li class="menu-item">
-        <a href="{{ route('locations.index') }}" class="menu-link">
-            <i class="menu-icon tf-icons bx bx-map"></i>
-            <div data-i18n="Locations">Locations</div>
-        </a>
-    </li>
-    <li class="menu-item mt-4">
-                        <a href="{{ route('logout') }}" class="menu-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="menu-icon tf-icons bx bx-log-out"></i>
-                            <div data-i18n="Logout">Logout</div>
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </li>
-          </ul>
-          </ul>
-        </aside>
-        <!-- / Menu -->
-
-        <!-- Layout container -->
-        <div class="layout-page">
-          <!-- Navbar -->
-
-          <nav
-            class="layout-navbar"
-            id="layout-navbar"
-          >
-            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                <i class="bx bx-menu bx-sm"></i>
-              </a>
-            </div>
-          </nav>
-
-          <!-- / Navbar -->
-          <div class="content-wrapper">
-                    <div id="map" style="height: 592px;"></div>
-
-                    <form action="{{ route('save-location') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description:</label>
-                            <textarea class="form-control" id="description" name="description" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="latitude">Latitude:</label>
-                            <input type="number" step="any" class="form-control" id="latitude" name="latitude" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="longitude">Longitude:</label>
-                            <input type="number" step="any" class="form-control" id="longitude" name="longitude" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="photo">Photo:</label>
-                            <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Location</button>
-                    </form>
-
-                </div>
-            </div>
+        <div class="map">
+            <img src="{{ asset('images/maps.png') }}" alt="Map of Southern Leyte">
+            <p>Southern Leyte, a stunning province in the Philippines, faces significant challenges related to its marine ecosystem. The area has been struggling with illegal fishing practices that threaten its rich biodiversity and disrupt the balance of its underwater habitats. Additionally, an outbreak of Crown-of-Thorns Starfish (COTS) has exacerbated the problem, as these invasive predators damage coral reefs and further strain the local marine environment. Efforts to address these issues are crucial for preserving Southern Leyte’s unique marine life and ensuring the health of its ecosystems for future generations.</p>
         </div>
     </div>
 
-    <!-- Core JS -->
-    <script src="{{ asset('assets/vendor/libs/jquery/jquery.js')}}"></script>
-    <script src="{{ asset('assets/vendor/libs/popper/popper.js')}}"></script>
-    <script src="{{ asset('assets/vendor/js/bootstrap.js')}}"></script>
-    <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
-    <script src="{{ asset('assets/vendor/js/menu.js')}}"></script>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-          <!-- Content wrapper -->
-          <div class="content-wrapper">
-          <div id="map"></div>
-    <!-- Core JS -->
-    <!-- leaflet js  -->
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    <div class="contact-info">
+        <div class="details">
+            <div class="img">
+                <img src="{{ asset('images/logo1.jpg') }}" alt="Logo 1">
+                <img src="{{ asset('images/logo3.jpg') }}" alt="Logo 2">
+                <p>
+                    In Partnership with: <br> 
+                    <span style="font-weight: bold;">SOUTHERN LEYTE UNIVERSITY-BONTOC CAMPUS, <br>
+                    RESEARCH, INNOVATION AND EXTENSION SERVICES -SLSU BONTOC and <br>
+                    Bureau of Fisheries and Aquatic Resources</span>
+                </p>
+            </div>  
+            <div class="info">
+                <p><strong>Contact Details:</strong></p>
+                <p>📞 <span style="font-weight: bold;">0993023200445</span></p>
+                <p>✉️ <span style="font-weight: bold;">dssdks@gmail.com</span></p>
+            </div>        
+            
+        </div>
+    </div>  
 
 
-<script>
-   // Initialize the map
-var map = L.map('map').setView([10.354172, 124.972916], 8);
 
-// OSM layer
-var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-});
-osm.addTo(map);
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">{{ __('Login to Sneat') }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="app-brand justify-content-center mb-4">
+          <a href="index.html" class="app-brand-link gap-2">
+            <span class="app-brand-logo demo">
+              <!-- SVG Logo Here -->
+            </span>
+            <span class="app-brand-text demo text-body fw-bolder">Sneat</span>
+          </a>
+        </div>
+        <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
-// Add Locate control
-L.control.locate().addTo(map);
+        <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
+          @csrf
+          <div class="mb-3">
+            <label for="email" class="form-label">{{ __('Email Address') }}</label>
+            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Enter your email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+            @error('email')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
 
-// Marker variable
-var marker;
+          <div class="mb-3 form-password-toggle">
+            <div class="d-flex justify-content-between">
+              <label class="form-label" for="password">{{ __('Password') }}</label>
+              @if (Route::has('password.request'))
+                <a href="{{ route('password.request') }}">
+                  <small>{{ __('Forgot Your Password?') }}</small>
+                </a>
+              @endif
+            </div>
+            <div class="input-group input-group-merge">
+              <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required autocomplete="current-password">
+              <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+              @error('password')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+              @enderror
+            </div>
+          </div>
 
-// Click event to place marker
-map.on('click', function(e) {
-    if (marker) {
-        map.removeLayer(marker);
-    }
-    marker = L.marker(e.latlng).addTo(map);
-    document.getElementById('latitude').value = e.latlng.lat;
-    document.getElementById('longitude').value = e.latlng.lng;
-});
-</script>
+          <div class="mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+              <label class="form-check-label" for="remember">{{ __('Remember Me') }}</label>
+            </div>
+          </div>
 
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="{{ asset('assets/vendor/libs/jquery/jquery.js')}}"></script>
-    <script src="{{ asset('assets/vendor/libs/popper/popper.js')}}"></script>
-    <script src="{{ asset('assets/vendor/js/bootstrap.js')}}"></script>
-    <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
+          <div class="mb-3">
+            <button class="btn btn-primary d-grid w-100" type="submit">{{ __('Login') }}</button>
+          </div>
+        </form>
 
-    <script src="{{ asset('assets/vendor/js/menu.js')}}"></script>
-    <!-- endbuild -->
+        <p class="text-center">
+          <span>{{ __('New on our platform?') }}</span>
+          <a href="{{ route('register') }}">
+            <span>{{ __('Create an account') }}</span>
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <!-- Vendors JS -->
-    <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
-
-    <!-- Main JS -->
-    <script src="{{ asset('assets/js/main.js')}}"></script>
-
-    <!-- Page JS -->
-    <script src="{{ asset('assets/js/dashboards-analytics.js')}}"></script>
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-  </body>
-@endsection
+    <div class="footer">
+        <p>ALL RIGHTS RESERVED 2024</p>
+    </div>
+</body>
+</html>

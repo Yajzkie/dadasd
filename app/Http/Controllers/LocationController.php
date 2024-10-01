@@ -10,7 +10,7 @@ class LocationController extends Controller
     public function index()
     {
         $locations = Location::all();
-        return view('locations.index', compact('locations'));
+        return view('admin.location', compact('locations'));
     }
 
     public function store(Request $request)
@@ -36,6 +36,18 @@ class LocationController extends Controller
 
         $location->save();
 
-        return redirect()->route('locations.index');
+        return redirect()->route('admin.location');
+    }
+
+    public function destroy($id)
+    {
+        $location = Location::find($id);
+
+        if ($location) {
+            $location->delete();
+            return response()->json(['message' => 'Location deleted successfully.']);
+        } else {
+            return response()->json(['message' => 'Location not found.'], 404);
+        }
     }
 }

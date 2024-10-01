@@ -4,20 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
     /**
@@ -25,7 +15,16 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected function redirectTo()
+    {
+        // Check if the user is an admin
+        if (Auth::user()->role == 'admin') {
+            return '/admin/index'; // Change this to the desired admin route
+        }
+        
+        // Default redirection for regular users
+        return '/user/dashboard'; // Change this to the desired user route
+    }
 
     /**
      * Create a new controller instance.
@@ -35,6 +34,21 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
+    }
+
+    /**
+     * Handle user authenticated event.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $users
+     * @return \Illuminate\Http\Response
+     */
+    protected function authenticated(Request $request, $users)
+    {
+        if ($users->role === 'admin') {
+            return redirect()->route('admin.index');
+        }
+
+        return redirect()->route('user.location');
     }
 }
