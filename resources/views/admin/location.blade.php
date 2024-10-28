@@ -141,12 +141,15 @@
     <!-- Leaflet map script -->
     <script>
         // Initialize the map
-        var map = L.map('map').setView([10.354172, 124.972916], 8);
+        var map = L.map('map').setView([10.306812602471465, 125.00810623168947], 12);
 
         // OSM layer
-        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+
+    //osm layer
+    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    osm.addTo(map);
 
         // Add Locate control
         L.control.locate().addTo(map);
@@ -166,18 +169,29 @@
                 }
             });
         }
-
         // Add markers for saved locations
         @foreach($locations as $location)
-            var popupContent = '<b>{{ $location->name }}</b><br>{{ $location->description }}';
-            @if($location->photo)
-                popupContent += '<br><img src="{{ asset('storage/' . $location->photo) }}" alt="{{ $location->name }}" style="width:100px;height:auto;">';
-            @endif
-            popupContent += '<br><button onclick="removeMarker(marker{{ $location->id }}, {{ $location->id }})">Delete</button>';
+            var popupContent = `
+                <div class="popup-content" style="width: 200px;">
+                    <h5 class="popup-title">{{ $location->name }}</h5>
+                    <p class="popup-description">{{ $location->description }}</p>
+                    @if($location->photo)
+                        <img src="{{ asset('storage/' . $location->photo) }}" alt="{{ $location->name }}" style="width:100%; height:auto;" class="img-thumbnail">
+                    @endif
+                    <small class="text-muted">Saved on: {{ \Carbon\Carbon::parse($location->created_at)->format('F j, Y, g:i a') }}</small>
+                    <div class="text-end mt-2">
+                        <button class="btn btn-danger btn-sm" onclick="removeMarker(marker{{ $location->id }}, {{ $location->id }})">
+                            <i class="bx bx-trash"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            `;
 
             var marker{{ $location->id }} = L.marker([{{ $location->latitude }}, {{ $location->longitude }}]).addTo(map)
                 .bindPopup(popupContent);
         @endforeach
+
+
     </script>
 
     <!-- Vendors JS -->
@@ -185,6 +199,7 @@
 
     <!-- Main JS -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+
 
     <!-- Page JS -->
     <script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>

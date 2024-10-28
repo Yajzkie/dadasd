@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -12,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('roles_id')->constrained('role')->onDelete('cascade'); 
+            $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
         });
     }
 
@@ -22,9 +23,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['roles_id']);
-            $table->dropColumn('role');
+            $table->dropForeign(['role_id']);
+            $table->dropColumn('role_id');
         });
     }
-    
-};
+}
+;

@@ -1,35 +1,43 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\UserLocationController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
+// Redirect root to login page
 Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/users/create', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
-Route::post('/users', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
-Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index'); // Ensure this is present
-Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy'); // Add this line
-Route::put('/users/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+// Authentication routes
+Route::get('/login', [LoginController::class, 'index'])->name('login.form');
+Route::post('/login', [LoginController::class, 'customLogin'])->name('login');
+Route::post('/logout', [LoginController::class, 'signOut'])->name('logout');
 
+// User management routes
+Route::resource('users', UserController::class);
 
-Auth::routes();
+// Explicitly define user creation and editing routes (optional)
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
 
-Route::get('/admin/index', [App\Http\Controllers\AdminDashboardController::class, 'index'])->name('admin.index');
-Route::post('/save-location', [App\Http\Controllers\LocationController::class, 'store'])->name('save-location');
-Route::get('/locations', [App\Http\Controllers\LocationController::class, 'index'])->name('admin.location');
-Route::delete('/locations/{id}', [App\Http\Controllers\LocationController::class, 'destroy'])->name('locations.destroy');
+// Admin routes
+Route::middleware('admin')->group(function () {
+    Route::get('/admin/index', [AdminDashboardController::class, 'index'])->name('admin.index');
+    Route::post('/save-location', [LocationController::class, 'store'])->name('save-location');
+    Route::get('/admin/locations', [LocationController::class, 'index'])->name('admin.location');
+    Route::delete('/locations/{id}', [LocationController::class, 'destroy'])->name('locations.destroy');
+});
 
-
-
+// User dashboard routes
+Route::middleware('user')->group(function () {
+    Route::get('/user/index', [UserDashboardController::class, 'index'])->name('user.index');
+    Route::get('/locations/create', [UserLocationController::class, 'create'])->name('locations.create');
+    Route::post('user/locations', [UserLocationController::class, 'store'])->name('user-save-location');
+    Route::get('/locations', [UserLocationController::class, 'index'])->name('user.index');
+});

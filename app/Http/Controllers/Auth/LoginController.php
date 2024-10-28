@@ -5,50 +5,78 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; // Don't forget to import Auth
+use Illuminate\Support\Facades\Session; // Import the Session facade
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
-
     /**
-     * Where to redirect users after login.
+     * Show the login page.
      *
-     * @var string
+     * @return \Illuminate\View\View
      */
-    protected function redirectTo()
+    public function index()
     {
-        // Check if the user is an admin
-        if (Auth::user()->role == 'admin') {
-            return '/admin/index'; // Change this to the desired admin route
-        }
-        
-        // Default redirection for regular users
-        return '/user/dashboard'; // Change this to the desired user route
+        return view('auth.login');
     }
 
     /**
-     * Create a new controller instance.
+     * Handle the custom login request.
      *
-     * @return void
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function __construct()
+    public function customLogin(Request $request)
     {
-        $this->middleware('guest')->except('logout');
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        // Attempt to log the user in
+        if (Auth::attempt($credentials)) {
+            return redirect($this->redirectTo());
+        }
+
+        return redirect("/login")->withErrors(['email' => 'Login details are not valid']);
     }
 
     /**
-     * Handle user authenticated event.
+     * Redirect users based on their role.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $users
-     * @return \Illuminate\Http\Response
+     * @return string
      */
-    protected function authenticated(Request $request, $users)
+    public function redirectTo()
     {
-        if ($users->role === 'admin') {
-            return redirect()->route('admin.index');
+        $user = Auth::user();
+
+        if ($user) {
+            switch ($user->role_id) {
+                case 1:
+                    return '/admin/index';
+                case 2:
+                    return '/user/index';
+
+                default:
+                    return '/login'; // Fallback if no role matches
+            }
         }
 
-        return redirect()->route('user.location');
+        return '/login'; // Default fallback
+    }
+
+    /**
+     * Log the user out and redirect to the login page.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function signOut()
+    {
+        Session::flush();
+        Auth::logout();
+
+        return redirect('login');
     }
 }

@@ -20,21 +20,9 @@
                 <div class="menu-inner-shadow"></div>
                 <ul class="menu-inner py-1">
                     <li class="menu-item active">
-                        <a href="{{ route('admin.index') }}" class="menu-link">
+                        <a href="{{ route('user.index') }}" class="menu-link active">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Dashboard</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('admin.location') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-map"></i>
-                            <div data-i18n="Locations">Locations</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('users.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div data-i18n="Users">Manage Users</div>
                         </a>
                     </li>
                     <li class="menu-item mt-4">
@@ -73,7 +61,7 @@
                                     <h5 class="modal-title" id="locationModalLabel">Add Location</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <form action="{{ route('save-location') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('user-save-location') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-body">
                                         <div class="form-group">

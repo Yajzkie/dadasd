@@ -16,6 +16,19 @@ return new class extends Migration
             $table->string('role_name')->unique();
             $table->timestamps();
         });
+
+        DB::table('roles')->insert([
+            [
+                'role_name' => 'admin',
+                'created_at' => now(),  // Manually set the created_at timestamp
+                'updated_at' => now() 
+            ],
+            [
+                'role_name' => 'user',
+                'created_at' => now(),  // Manually set the created_at timestamp
+                'updated_at' => now()  // Add other roles if needed
+            ],
+        ]);
     }
 
     /**
