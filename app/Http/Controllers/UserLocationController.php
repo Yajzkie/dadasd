@@ -18,11 +18,15 @@ class UserLocationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
-            'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name' => 'nullable|string',
+            'description' => 'required|string',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'number_of_cots' => 'nullable|string',
+            'size_of_cots' => 'nullable|string',
+            'activity_type' => 'nullable|string',
+            'observer_category' => 'nullable|string',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
 
         $location = new Location();
@@ -30,6 +34,10 @@ class UserLocationController extends Controller
         $location->description = $request->description;
         $location->latitude = $request->latitude;
         $location->longitude = $request->longitude;
+        $location->number_of_cots = $request->number_of_cots;
+        $location->size_of_cots = $request->size_of_cots;
+        $location->activity_type = $request->activity_type;
+        $location->observer_category = $request->observer_category;
 
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('photos', 'public');

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -171,25 +173,30 @@
         }
         // Add markers for saved locations
         @foreach($locations as $location)
-            var popupContent = `
-                <div class="popup-content" style="width: 200px;">
-                    <h5 class="popup-title">{{ $location->name }}</h5>
-                    <p class="popup-description">{{ $location->description }}</p>
-                    @if($location->photo)
-                        <img src="{{ asset('storage/' . $location->photo) }}" alt="{{ $location->name }}" style="width:100%; height:auto;" class="img-thumbnail">
-                    @endif
-                    <small class="text-muted">Saved on: {{ \Carbon\Carbon::parse($location->created_at)->format('F j, Y, g:i a') }}</small>
-                    <div class="text-end mt-2">
-                        <button class="btn btn-danger btn-sm" onclick="removeMarker(marker{{ $location->id }}, {{ $location->id }})">
-                            <i class="bx bx-trash"></i> Delete
-                        </button>
-                    </div>
-                </div>
-            `;
+              var popupContent = `
+                  <div class="popup-content" style="width: 200px;">
+                      <h5 class="popup-title">{{ $location->name ?? 'Unnamed Location' }}</h5>
+                      <p class="popup-description">{{ $location->description }}</p>
+                      <p><strong>Number of COTS:</strong> {{ $location->number_of_cots ?? 'N/A' }}</p>
+                      <p><strong>Size of COTS:</strong> {{ $location->size_of_cots ?? 'N/A' }}</p>
+                      <p><strong>Activity Type:</strong> {{ $location->activity_type ?? 'N/A' }}</p>
+                      <p><strong>Observer Category:</strong> {{ $location->observer_category ?? 'N/A' }}</p>
+                      <small class="text-muted">Saved on: {{ \Carbon\Carbon::parse($location->created_at)->format('F j, Y, g:i a') }}</small>
+                       @if($location->photo)
+                          <img src="{{ asset('storage/' . $location->photo) }}" alt="{{ $location->name }}" style="width:100%; height:auto;" class="img-thumbnail">
+                      @endif
+                      <div class="text-end mt-2">
+                          <button class="btn btn-danger btn-sm" onclick="removeMarker(marker{{ $location->id }}, {{ $location->id }})">
+                              <i class="bx bx-trash"></i> Delete
+                          </button>
+                      </div>
+                  </div>
+              `;
 
-            var marker{{ $location->id }} = L.marker([{{ $location->latitude }}, {{ $location->longitude }}]).addTo(map)
-                .bindPopup(popupContent);
-        @endforeach
+              var marker{{ $location->id }} = L.marker([{{ $location->latitude }}, {{ $location->longitude }}]).addTo(map)
+                  .bindPopup(popupContent);
+          @endforeach
+
 
 
     </script>
@@ -206,4 +213,7 @@
 
     <!-- GitHub buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- Custom CSS for Modal -->
+
 @endsection

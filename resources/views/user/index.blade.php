@@ -1,6 +1,85 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    /* Modal Overlay */
+    .modal.fade .modal-dialog {
+        transform: scale(0.8);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .modal.fade.show .modal-dialog {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        border-radius: 12px;
+        border: none;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(145deg, #f3f4f6, #ffffff);
+    }
+
+    /* Modal Header */
+    .modal-header {
+        background-color: #0056b3;
+        color: white;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        border-bottom: none;
+        padding: 16px 24px;
+    }
+    .modal-title {
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+    .btn-close {
+        color: white;
+        opacity: 0.8;
+    }
+    .btn-close:hover {
+        opacity: 1;
+    }
+
+    /* Modal Form */
+    .form-group label {
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        transition: box-shadow 0.3s ease;
+    }
+    .form-control:focus {
+        box-shadow: 0 0 8px rgba(0, 86, 179, 0.2);
+    }
+
+    /* Modal Buttons */
+    .btn-primary {
+        background-color: #0056b3;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 16px;
+        transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover {
+        background-color: #004494;
+    }
+    .btn-secondary {
+        border: none;
+        background-color: transparent;
+        color: #0056b3;
+        transition: color 0.3s ease;
+    }
+    .btn-secondary:hover {
+        color: #004494;
+    }
+</style>
+
 <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -66,11 +145,46 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="name">Name:</label>
-                                            <input type="text" class="form-control" id="name" name="name" required>
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="optional">
                                         </div>
                                         <div class="form-group">
-                                            <label for="description">Description:</label>
-                                            <textarea class="form-control" id="description" name="description" required></textarea>
+                                            <label>Number of COTS in 10x10 area:</label>
+                                            <select class="form-control" id="number_of_cots" name="number_of_cots">
+                                                <option value="1-5">1-5</option>
+                                                <option value="6-10">6-10</option>
+                                                <option value="11-20">11-20</option>
+                                                <option value="21-50">21-50</option>
+                                                <option value="51_or_more">51 or more</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Size of COTS:</label>
+                                            <select class="form-control" id="size_of_cots" name="size_of_cots">
+                                                <option value="small">Small (1-10 cm)</option>
+                                                <option value="medium">Medium (11-30 cm)</option>
+                                                <option value="large">Large (31 cm or larger)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="activity_type">Type of Activity:</label>
+                                            <select class="form-control" id="activity_type" name="activity_type">
+                                                <option value="fishing">Fishing</option>
+                                                <option value="underwater_photography">Underwater Photography / Video</option>
+                                                <option value="snorkeling">Snorkeling / Free Diving / Swimming</option>
+                                                <option value="recreational_diving">Recreational / Scuba Diving</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="observer_category">Observer Category:</label>
+                                            <select class="form-control" id="observer_category" name="observer_category">
+                                                <option value="fisherfolks">Fisherfolks</option>
+                                                <option value="barangay_residents">Barangay Residents</option>
+                                                <option value="local_government">Local Government Unit (LGU)</option>
+                                                <option value="independent_researcher">Independent Researcher</option>
+                                                <option value="state_agency">State Agency</option>
+                                                <option value="other">Other</option>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="latitude">Latitude:</label>
@@ -83,6 +197,10 @@
                                         <div class="form-group">
                                             <label for="photo">Photo:</label>
                                             <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Additional Comments or Observations:</label>
+                                            <textarea class="form-control" id="description" name="description" required></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
