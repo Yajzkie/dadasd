@@ -92,7 +92,13 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="{{ route('users.index') }}" class="menu-link">
+                        <a href="{{ route('admin.report') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-user"></i>
+                            <div data-i18n="Users">report</div>
+                        </a>
+                    </li>
+            <li class="menu-item">
+                <a href="{{ route('admin.adduser') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user"></i>
                     <div data-i18n="Users">Manage Users</div>
                 </a>
@@ -177,6 +183,8 @@
                   <div class="popup-content" style="width: 200px;">
                       <h5 class="popup-title"> <strong>Name:</strong> {{ $location->name ?? '' }}</h5>
                       <p class="popup-description"><strong>Description:</strong> {{ $location->description }}</p>
+                      <p><strong>Date of Sighting:</strong> {{ $location->date_of_sighting }}</p>
+                      <p><strong>Time of Sighting:</strong> {{ $location->time_of_sighting }}</p>
                       <p><strong>Number of COTS:</strong> {{ $location->number_of_cots ?? 'N/A' }}</p>
                       <p><strong>Size of COTS:</strong> {{ $location->size_of_cots ?? 'N/A' }}</p>
                       <p><strong>Activity Type:</strong> {{ $location->activity_type ?? 'N/A' }}</p>

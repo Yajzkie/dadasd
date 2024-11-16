@@ -32,7 +32,13 @@
                         </a>
                     </li>
                     <li class="menu-item">
-                        <a href="{{ route('users.index') }}" class="menu-link">
+                        <a href="{{ route('admin.report') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-user"></i>
+                            <div data-i18n="Users">report</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('admin.adduser') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-user"></i>
                             <div data-i18n="Users">Manage Users</div>
                         </a>
@@ -65,29 +71,44 @@
                 <div class="content-wrapper">
                     <div class="container mt-5">
                         <div class="row">
-                            <!-- total users at the top -->
-                            <div class="col-md-2 mb-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5>Total Users</h5>
-                                        <p>{{ $userCount }} users</p>
+                            <!-- Total Users Card -->
+                            <div class="col-md-3 mb-4">
+                                <div class="card shadow-lg rounded-lg" style="background-color: #f7f7f7; border: none;">
+                                    <div class="card-body text-center" style="padding: 30px;">
+                                        <h5 class="mb-3" style="font-weight: 600; color: #333;">Total Users</h5>
+                                        <p style="font-size: 1.5rem; font-weight: bold; color: #4caf50;">{{ $userCount }} users</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- pie chart at the bottom -->
-                            <div class="col-md-6">
-                                <div class="card">
+                            <!-- Total Cots Card -->
+                            <div class="col-md-3 mb-4">
+                                <div class="card shadow-lg rounded-lg" style="background-color: #f7f7f7; border: none;">
+                                    <div class="card-body text-center" style="padding: 30px;">
+                                        <h5 class="mb-3" style="font-weight: 600; color: #333;">Total Cots</h5>
+                                        <p style="font-size: 1.5rem; font-weight: bold; color: #ff9800;">{{ $totalCots }} cots</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pie Chart Card -->
+                    <div class="container-fluid mt-5">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card shadow-lg rounded-lg" style="border: none;">
                                     <div class="card-body">
-                                        <h5>Locations by Municipality</h5>
+                                        <h5 style="font-weight: 600; color: #333; text-align: center;">Locations by Municipality</h5>
                                         <!-- Donut Chart -->
-                                        <div id="pieChart"></div>
+                                        <div id="pieChart" style="height: 350px;"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- / Layout container -->
             </div>
         </div>
     </div>

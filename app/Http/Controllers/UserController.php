@@ -29,14 +29,14 @@ class UserController extends Controller
         ]);
 
         // Redirect to users list or any other page
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        return redirect()->route('admin.adduser')->with('success', 'User created successfully.');
     }
 
     public function index()
     {
         $users = User::all(); // Fetch all users
         $roles = Role::all(); // Fetch all roles
-        return view('users.index', compact('users', 'roles')); // Pass roles to the view
+        return view('admin.adduser', compact('users', 'roles')); // Pass roles to the view
     }
     
     public function destroy($id)
@@ -46,7 +46,7 @@ class UserController extends Controller
         $user->delete();
 
         // Redirect back with a success message
-        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('admin.adduser')->with('success', 'User deleted successfully.');
     }
 
     public function update(Request $request, User $user)
@@ -66,18 +66,18 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        return redirect()->route('admin.adduser')->with('success', 'User updated successfully.');
     }
 
     public function create()
     {
         $roles = Role::all(); // Fetch all roles from the database
-        return view('users.index', compact('roles')); // Return the view with roles data
+        return view('admin.adduser', compact('roles')); // Return the view with roles data
     }
 
     public function edit(User $user)
     {
         $roles = Role::all(); // Fetch all roles
-        return view('users.index', compact('user', 'roles')); // Return the view with user and roles data
+        return view('admin.adduser', compact('user', 'roles')); // Return the view with user and roles data
     }
 }

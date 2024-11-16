@@ -13,7 +13,6 @@ class LocationController extends Controller
         return view('admin.location', compact('locations'));
     }
 
-        
     public function dashboard()
     {
         // Get the sum of number_of_cots by municipality
@@ -34,11 +33,9 @@ class LocationController extends Controller
         // Get the total number of users
         $userCount = \App\Models\User::count();
         
-        return view('admin.index', compact('municipalities', 'totalCotsArray', 'percentages', 'userCount'));
+        // Pass $totalCots to the view
+        return view('admin.index', compact('municipalities', 'totalCotsArray', 'percentages', 'userCount', 'totalCots'));
     }
-
-    
-
 
     public function store(Request $request)
     {
@@ -84,5 +81,12 @@ class LocationController extends Controller
         } else {
             return response()->json(['message' => 'Location not found.'], 404);
         }
+    }
+
+    // Method to generate the report
+    public function report()
+    {
+        $locations = Location::paginate(10);  // Limit to 10 rows per page
+        return view('admin.report', compact('locations'));
     }
 }

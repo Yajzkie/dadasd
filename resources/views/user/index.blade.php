@@ -148,6 +148,15 @@
                                             <input type="text" class="form-control" id="name" name="name" placeholder="optional">
                                         </div>
                                         <div class="form-group">
+                                            <label for="date_of_sighting">Date of Sighting:</label>
+                                            <input type="date" class="form-control" id="date_of_sighting" name="date_of_sighting">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="time_of_sighting">Time of Sighting:</label>
+                                            <input type="time" class="form-control" id="time_of_sighting" name="time_of_sighting">
+                                        </div>
+
+                                        <div class="form-group">
                                             <label>Municipality</label>
                                             <select class="form-control" id="municipality" name="municipality">
                                                 <option value="liloan">liloan</option>
@@ -159,19 +168,9 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Number of COTS in 10x10 area:</label>
-                                            <div class="input-group">
-                                                <select class="form-control" id="number_of_cots" name="number_of_cots" onchange="toggleCustomInput()">
-                                                    <option value="5">1-5</option>
-                                                    <option value="10">6-10</option>
-                                                    <option value="20">11-20</option>
-                                                    <option value="30">21-30</option>
-                                                    <option value="50">31-50</option>
-                                                    <option value="60">51 or more</option>
-                                                    <option value="custom">Other</option> <!-- Option for custom input -->
-                                                </select>
-                                                <input type="number" id="custom_number" name="custom_number" class="form-control" style="display: none;" placeholder="Enter a number" />
-                                            </div>
+                                            <input type="number" class="form-control" id="number_of_cots" name="number_of_cots" min="1" required placeholder="Enter number of cots">
                                         </div>
+
                                         <div class="form-group">
                                             <label>Size of COTS:</label>
                                             <select class="form-control" id="size_of_cots" name="size_of_cots">
@@ -189,10 +188,13 @@
                                                 <option value="snorkeling">Snorkeling / Free Diving / Swimming</option>
                                                 <option value="recreational diving">Recreational / Scuba Diving</option>
                                                 <option value="shore gleaning">Shore gleaning</option>
-                                                <option value="spear fishing">spear fishing</option>
+                                                <option value="spear fishing">Spear fishing</option>
                                                 <option value="other">Other</option>
                                             </select>
+                                            <!-- Custom input for "Other" activity -->
+                                            <input type="text" class="form-control mt-2 d-none" id="custom_activity" name="custom_activity" placeholder="Please specify activity">
                                         </div>
+
                                         <div class="form-group">
                                             <label for="observer_category">Observer Category:</label>
                                             <select class="form-control" id="observer_category" name="observer_category">
@@ -200,8 +202,11 @@
                                                 <option value="barangay residents">Barangay Residents</option>
                                                 <option value="local government">Local Government Unit (LGU)</option>
                                                 <option value="independent researcher">Independent Researcher</option>
+                                                <option value="independent researcher">SLSU Researcher</option>
                                                 <option value="other">Other</option>
                                             </select>
+                                            <!-- Custom input for "Other" observer -->
+                                            <input type="text" class="form-control mt-2 d-none" id="custom_observer" name="custom_observer" placeholder="Please specify observer category">
                                         </div>
                                         <div class="form-group">
                                             <label for="latitude">Latitude:</label>
@@ -256,36 +261,160 @@
     // Add Locate control
     L.control.locate().addTo(map);
 
+
+    var geoJsonPolygon = {
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [125.02515501453013, 10.032553784991762],
+                        [125.07184554869963, 10.021157495386717],
+                        [125.13576332178366, 10.06206684363552],
+                        [125.13451438400216, 10.091963662272903],
+                        [125.12872705924485, 10.10960592645001],
+                        [125.12729010074577, 10.134239745256242],
+                        [125.13009829477699, 10.16480296150926],
+                        [125.12699340233667, 10.18049036986909],
+                        [125.09447303153883, 10.206218871355304],
+                        [125.05659584579479, 10.297631416255442],
+                        [125.0258533519555, 10.395425569187012],
+                        [124.97762164587272, 10.397836935939551],
+                        [124.9567179468848, 10.381001121502038],
+                        [124.96679966471498, 10.251174429415457],
+                        [124.97227916647046, 10.19319895491995],
+                        [124.99563995681876, 10.145185088583375],
+                        [125.02515501453013, 10.032553784991762]  // Back to the start
+                    ]
+                ]
+            }
+        }
+    ]
+};
+// Add the slightly larger GeoJSON polygon to the map
+var polygon = L.geoJSON(geoJsonPolygon, {
+    style: function () {
+        return {
+            color: "#0000FF",  // Border color (still defined, but will be invisible)
+            weight: 2,         // Border thickness
+            opacity: 1,        // Make the border fully transparent
+            fillOpacity: 0     // No fill color
+        };
+    }
+}).addTo(map);
+
+// Fit map to the new polygon bounds
+map.fitBounds(polygon.getBounds());
+
+
+// Add smaller GeoJSON polygon to the map
+var polygon = L.geoJSON(geoJsonPolygon, {
+    style: function () {
+        return {
+            color: "#0000FF",  // Border color (still defined, but will be invisible)
+            weight: 2,         // Border thickness
+            opacity: 1,        // Make the border fully transparent
+            fillOpacity: 0     // No fill color
+        };
+    }
+}).addTo(map);
+
+// Fit map to smaller polygon bounds
+map.fitBounds(polygon.getBounds());
+
+    // Add GeoJSON polygon to the map with a transparent border
+    var polygon = L.geoJSON(geoJsonPolygon, {
+        style: function () {
+            return {
+                color: "#0000FF",  // Border color (still defined, but will be invisible)
+                weight: 2,         // Border thickness
+                opacity: 1,        // Make the border fully transparent
+                fillOpacity: 0     // No fill color
+            };
+        }
+    }).addTo(map);
+
+    // Fit map to polygon bounds
+    map.fitBounds(polygon.getBounds());
+
     // Loop through each location from the backend and add markers
     @foreach ($locations as $location)
         var marker{{ $location->id }} = L.marker([{{ $location->latitude }}, {{ $location->longitude }}]).addTo(map);
     @endforeach
 
-    // Click event to place a new marker
-    var marker; // Global marker variable for new markers
-    map.on('click', function(e) {
-        if (marker) {
-            map.removeLayer(marker);
-        }
-        marker = L.marker(e.latlng).addTo(map);
-        document.getElementById('latitude').value = e.latlng.lat;
-        document.getElementById('longitude').value = e.latlng.lng;
+    // Global marker variable for new markers
+    var marker;
 
-        // Show the modal
-        $('#locationModal').modal('show');
+    // Click event to place a new marker
+    map.on('click', function(e) {
+        var clickedPoint = e.latlng;
+
+        // Check if the clicked point is inside the polygon
+        var inside = false;
+        polygon.eachLayer(function(layer) {
+            if (layer.getBounds().contains(clickedPoint)) {
+                inside = true;
+            }
+        });
+
+        if (inside) {
+            if (marker) {
+                map.removeLayer(marker); // Remove existing marker
+            }
+            marker = L.marker(clickedPoint).addTo(map); // Place new marker
+            document.getElementById('latitude').value = clickedPoint.lat;
+            document.getElementById('longitude').value = clickedPoint.lng;
+
+            // Show the modal
+            $('#locationModal').modal('show');
+        } else {
+            alert("You can only place markers inside the sogod bay.");
+        }
     });
 </script>
 
 <script>
-    function toggleCustomInput() {
-        var select = document.getElementById('number_of_cots');
-        var customInput = document.getElementById('custom_number');
-        if (select.value === 'custom') {
-            customInput.style.display = 'inline-block'; // Show custom input
+    // Function to toggle custom input visibility based on selection
+    document.getElementById('activity_type').addEventListener('change', function() {
+        var activitySelect = document.getElementById('activity_type');
+        var customActivityInput = document.getElementById('custom_activity');
+        if (activitySelect.value === 'other') {
+            customActivityInput.classList.remove('d-none');
         } else {
-            customInput.style.display = 'none'; // Hide custom input
+            customActivityInput.classList.add('d-none');
         }
-    }
+    });
+
+    document.getElementById('observer_category').addEventListener('change', function() {
+        var observerSelect = document.getElementById('observer_category');
+        var customObserverInput = document.getElementById('custom_observer');
+        if (observerSelect.value === 'other') {
+            customObserverInput.classList.remove('d-none');
+        } else {
+            customObserverInput.classList.add('d-none');
+        }
+    });
+
+    // When the form is submitted, append the custom input value if provided
+    document.querySelector('form').addEventListener('submit', function() {
+        // If "Other" is selected for activity type and custom input is provided
+        var activitySelect = document.getElementById('activity_type');
+        var customActivityInput = document.getElementById('custom_activity');
+        if (activitySelect.value === 'other' && customActivityInput.value) {
+            activitySelect.value = customActivityInput.value; // Override the value with the custom input
+        }
+
+        // If "Other" is selected for observer category and custom input is provided
+        var observerSelect = document.getElementById('observer_category');
+        var customObserverInput = document.getElementById('custom_observer');
+        if (observerSelect.value === 'other' && customObserverInput.value) {
+            observerSelect.value = customObserverInput.value; // Override the value with the custom input
+        }
+    });
 </script>
 
     <!-- build:js assets/vendor/js/core.js -->

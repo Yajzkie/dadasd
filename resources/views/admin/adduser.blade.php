@@ -67,8 +67,14 @@
                             <div data-i18n="Locations">Locations</div>
                         </a>
                     </li>
+                    <li class="menu-item">
+                        <a href="{{ route('admin.report') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-user"></i>
+                            <div data-i18n="Users">report</div>
+                        </a>
+                    </li>
                     <li class="menu-item active">
-                        <a href="{{ route('users.index') }}" class="menu-link">
+                        <a href="{{ route('admin.adduser') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-user"></i>
                             <div data-i18n="Users">Manage Users</div>
                         </a>
@@ -98,21 +104,25 @@
                 </nav>
                 <!-- / Navbar -->
 
-                <div class="container mt-4">
-                    <h1>Users</h1>
-                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                        Create User
-                    </button>
+              <div class="container mt-4">
+    <h1>Users</h1>
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">
+        Create User
+    </button>
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+    <!-- Striped Table -->
+    <div class="card">
+        <h5 class="card-header">Users List</h5>
+        <div class="table-responsive text-nowrap">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
                                 @foreach ($users as $user)
                                 <tr>
                                     <td>{{ $user->name }}</td>
@@ -172,14 +182,7 @@
                             </tbody>
 
 
-                    </table>
-                </div>
-            </div>
-            <!-- / Layout container -->
-        </div>
-    </div>
-
-    <!-- Add User Modal -->
+<!-- Add User Modal -->
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -209,14 +212,14 @@
 
                     <!-- Role Dropdown -->
                     <div class="mb-3">
-                            <label for="role" class="form-label">Role</label>
-                            <select class="form-select" id="role" name="role_id" required>
-                                <option value="">Select Role</option>
-                                @foreach($roles as $role)
-                                    <option value="{{ $role->id }}">{{ $role->role_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <label for="role" class="form-label">Role</label>
+                        <select class="form-select" id="role" name="role_id" required>
+                            <option value="">Select Role</option>
+                            @foreach($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
                     <!-- Add User Button -->
                     <button type="submit" class="btn btn-primary">Add User</button>
@@ -225,5 +228,6 @@
         </div>
     </div>
 </div>
+
 
 @endsection
