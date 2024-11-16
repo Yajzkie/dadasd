@@ -13,6 +13,33 @@ class LocationController extends Controller
         return view('admin.location', compact('locations'));
     }
 
+        
+    public function dashboard()
+    {
+        // Get the sum of number_of_cots by municipality
+        $municipalityCots = Location::select('municipality', \DB::raw('sum(number_of_cots) as total_cots'))
+                                    ->groupBy('municipality')
+                                    ->get();
+        
+        // Calculate the total number of cots
+        $totalCots = $municipalityCots->sum('total_cots');
+        
+        // Prepare data for the chart
+        $municipalities = $municipalityCots->pluck('municipality');
+        $totalCotsArray = $municipalityCots->pluck('total_cots');
+        $percentages = $municipalityCots->map(function ($item) use ($totalCots) {
+            return ($item->total_cots / $totalCots) * 100; // Calculate percentage
+        });
+        
+        // Get the total number of users
+        $userCount = \App\Models\User::count();
+        
+        return view('admin.index', compact('municipalities', 'totalCotsArray', 'percentages', 'userCount'));
+    }
+
+    
+
+
     public function store(Request $request)
     {
         $request->validate([
@@ -28,7 +55,7 @@ class LocationController extends Controller
         ]);
 
         $location = new Location();
-        $location->name = $request->name;
+        $location->name = $request->name ?? null;
         $location->description = $request->description;
         $location->latitude = $request->latitude;
         $location->longitude = $request->longitude;

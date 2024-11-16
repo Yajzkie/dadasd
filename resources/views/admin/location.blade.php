@@ -175,8 +175,8 @@
         @foreach($locations as $location)
               var popupContent = `
                   <div class="popup-content" style="width: 200px;">
-                      <h5 class="popup-title">{{ $location->name ?? 'Unnamed Location' }}</h5>
-                      <p class="popup-description">{{ $location->description }}</p>
+                      <h5 class="popup-title"> <strong>Name:</strong> {{ $location->name ?? '' }}</h5>
+                      <p class="popup-description"><strong>Description:</strong> {{ $location->description }}</p>
                       <p><strong>Number of COTS:</strong> {{ $location->number_of_cots ?? 'N/A' }}</p>
                       <p><strong>Size of COTS:</strong> {{ $location->size_of_cots ?? 'N/A' }}</p>
                       <p><strong>Activity Type:</strong> {{ $location->activity_type ?? 'N/A' }}</p>

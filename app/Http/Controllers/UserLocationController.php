@@ -26,11 +26,12 @@ class UserLocationController extends Controller
             'size_of_cots' => 'nullable|string',
             'activity_type' => 'nullable|string',
             'observer_category' => 'nullable|string',
+            'municipality' => 'nullable|string',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
 
         $location = new Location();
-        $location->name = $request->name;
+        $location->name = $request->name ?? null;
         $location->description = $request->description;
         $location->latitude = $request->latitude;
         $location->longitude = $request->longitude;
@@ -38,6 +39,7 @@ class UserLocationController extends Controller
         $location->size_of_cots = $request->size_of_cots;
         $location->activity_type = $request->activity_type;
         $location->observer_category = $request->observer_category;
+        $location->municipality = $request->municipality;
 
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('photos', 'public');

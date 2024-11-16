@@ -148,14 +148,29 @@
                                             <input type="text" class="form-control" id="name" name="name" placeholder="optional">
                                         </div>
                                         <div class="form-group">
-                                            <label>Number of COTS in 10x10 area:</label>
-                                            <select class="form-control" id="number_of_cots" name="number_of_cots">
-                                                <option value="1-5">1-5</option>
-                                                <option value="6-10">6-10</option>
-                                                <option value="11-20">11-20</option>
-                                                <option value="21-50">21-50</option>
-                                                <option value="51_or_more">51 or more</option>
+                                            <label>Municipality</label>
+                                            <select class="form-control" id="municipality" name="municipality">
+                                                <option value="liloan">liloan</option>
+                                                <option value="libagon">libagon</option>
+                                                <option value="bontoc">bontoc</option>
+                                                <option value="tomas oppus">tomas oppus</option>
+                                                <option value="sogod">sogod</option>
                                             </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Number of COTS in 10x10 area:</label>
+                                            <div class="input-group">
+                                                <select class="form-control" id="number_of_cots" name="number_of_cots" onchange="toggleCustomInput()">
+                                                    <option value="5">1-5</option>
+                                                    <option value="10">6-10</option>
+                                                    <option value="20">11-20</option>
+                                                    <option value="30">21-30</option>
+                                                    <option value="50">31-50</option>
+                                                    <option value="60">51 or more</option>
+                                                    <option value="custom">Other</option> <!-- Option for custom input -->
+                                                </select>
+                                                <input type="number" id="custom_number" name="custom_number" class="form-control" style="display: none;" placeholder="Enter a number" />
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Size of COTS:</label>
@@ -168,10 +183,13 @@
                                         <div class="form-group">
                                             <label for="activity_type">Type of Activity:</label>
                                             <select class="form-control" id="activity_type" name="activity_type">
-                                                <option value="fishing">Fishing</option>
-                                                <option value="underwater_photography">Underwater Photography / Video</option>
+                                                <option value="fishing/namasol">Fishing/namasol</option>
+                                                <option value="fishing/bangka fishing">Fishing/bangka fishing</option>
+                                                <option value="underwater photography">Underwater Photography / Video</option>
                                                 <option value="snorkeling">Snorkeling / Free Diving / Swimming</option>
-                                                <option value="recreational_diving">Recreational / Scuba Diving</option>
+                                                <option value="recreational diving">Recreational / Scuba Diving</option>
+                                                <option value="shore gleaning">Shore gleaning</option>
+                                                <option value="spear fishing">spear fishing</option>
                                                 <option value="other">Other</option>
                                             </select>
                                         </div>
@@ -179,10 +197,9 @@
                                             <label for="observer_category">Observer Category:</label>
                                             <select class="form-control" id="observer_category" name="observer_category">
                                                 <option value="fisherfolks">Fisherfolks</option>
-                                                <option value="barangay_residents">Barangay Residents</option>
-                                                <option value="local_government">Local Government Unit (LGU)</option>
-                                                <option value="independent_researcher">Independent Researcher</option>
-                                                <option value="state_agency">State Agency</option>
+                                                <option value="barangay residents">Barangay Residents</option>
+                                                <option value="local government">Local Government Unit (LGU)</option>
+                                                <option value="independent researcher">Independent Researcher</option>
                                                 <option value="other">Other</option>
                                             </select>
                                         </div>
@@ -200,7 +217,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="description">Additional Comments or Observations:</label>
-                                            <textarea class="form-control" id="description" name="description" required></textarea>
+                                            <textarea class="form-control" id="description" name="description"></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -227,34 +244,49 @@
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 
     <script>
-        // Initialize the map
-        var map = L.map('map').setView([10.306812602471465, 125.00810623168947], 12);
+    // Initialize the map
+    var map = L.map('map').setView([10.306812602471465, 125.00810623168947], 12);
 
-        // OSM layer
-        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        });
-        osm.addTo(map);
+    // OSM layer
+    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    osm.addTo(map);
 
-        // Add Locate control
-        L.control.locate().addTo(map);
+    // Add Locate control
+    L.control.locate().addTo(map);
 
-        // Marker variable
-        var marker;
+    // Loop through each location from the backend and add markers
+    @foreach ($locations as $location)
+        var marker{{ $location->id }} = L.marker([{{ $location->latitude }}, {{ $location->longitude }}]).addTo(map);
+    @endforeach
 
-        // Click event to place marker
-        map.on('click', function(e) {
-            if (marker) {
-                map.removeLayer(marker);
-            }
-            marker = L.marker(e.latlng).addTo(map);
-            document.getElementById('latitude').value = e.latlng.lat;
-            document.getElementById('longitude').value = e.latlng.lng;
+    // Click event to place a new marker
+    var marker; // Global marker variable for new markers
+    map.on('click', function(e) {
+        if (marker) {
+            map.removeLayer(marker);
+        }
+        marker = L.marker(e.latlng).addTo(map);
+        document.getElementById('latitude').value = e.latlng.lat;
+        document.getElementById('longitude').value = e.latlng.lng;
 
-            // Show the modal
-            $('#locationModal').modal('show');
-        });
-    </script>
+        // Show the modal
+        $('#locationModal').modal('show');
+    });
+</script>
+
+<script>
+    function toggleCustomInput() {
+        var select = document.getElementById('number_of_cots');
+        var customInput = document.getElementById('custom_number');
+        if (select.value === 'custom') {
+            customInput.style.display = 'inline-block'; // Show custom input
+        } else {
+            customInput.style.display = 'none'; // Hide custom input
+        }
+    }
+</script>
 
     <!-- build:js assets/vendor/js/core.js -->
     <script src="{{ asset('assets/vendor/libs/jquery/jquery.js')}}"></script>

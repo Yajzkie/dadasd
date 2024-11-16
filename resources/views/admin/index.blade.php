@@ -15,7 +15,7 @@
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
                         <i class="bx bx-chevron-left bx-sm align-middle"></i>
                     </a>
-                    <span class="name-text ms-5">{{ Auth::user()->name }}</span>
+                    <span class="name-text ms-5">{{ Auth::user()->role_id }}</span>
                 </div>
                 <div class="menu-inner-shadow"></div>
                 <ul class="menu-inner py-1">
@@ -63,49 +63,30 @@
                 <!-- / Navbar -->
 
                 <div class="content-wrapper">
-                    <div id="map" style="height: 100%;"></div>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="locationModalLabel">Add Location</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="container mt-5">
+                        <div class="row">
+                            <!-- total users at the top -->
+                            <div class="col-md-2 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5>Total Users</h5>
+                                        <p>{{ $userCount }} users</p>
+                                    </div>
                                 </div>
-                                <form action="{{ route('save-location') }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="name">Name:</label>
-                                            <input type="text" class="form-control" id="name" name="name" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="description">Description:</label>
-                                            <textarea class="form-control" id="description" name="description" required></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="latitude">Latitude:</label>
-                                            <input type="number" step="any" class="form-control" id="latitude" name="latitude" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="longitude">Longitude:</label>
-                                            <input type="number" step="any" class="form-control" id="longitude" name="longitude" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="photo">Photo:</label>
-                                            <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
-                                        </div>
+                            </div>
+
+                            <!-- pie chart at the bottom -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5>Locations by Municipality</h5>
+                                        <!-- Donut Chart -->
+                                        <div id="pieChart"></div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save Location</button>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -117,58 +98,98 @@
     <script src="{{ asset('assets/vendor/js/bootstrap.js')}}"></script>
     <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
     <script src="{{ asset('assets/vendor/js/menu.js')}}"></script>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+
+    <!-- ApexCharts JS -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <script>
-        // Initialize the map
-        var map = L.map('map').setView([10.306812602471465, 125.00810623168947], 12);
-
-        // OSM layer
-        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        });
-        osm.addTo(map);
-
-        // Add Locate control
-        L.control.locate().addTo(map);
-
-        // Marker variable
-        var marker;
-
-        // Click event to place marker
-        map.on('click', function(e) {
-            if (marker) {
-                map.removeLayer(marker);
+    // Pie Chart Options
+    var optionsPieChart = {
+        chart: {
+            type: 'donut',
+            height: 350,
+            animations: {
+                enabled: true,
+                easing: 'easeinout',
+                speed: 800,
+                animateGradually: {
+                    enabled: true,
+                    delay: 150
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 350
+                }
             }
-            marker = L.marker(e.latlng).addTo(map);
-            document.getElementById('latitude').value = e.latlng.lat;
-            document.getElementById('longitude').value = e.latlng.lng;
+        },
+        series: @json($totalCotsArray), // Pass the total number of cots to the chart
+        labels: @json($municipalities), // Pass the municipalities to the chart
+        colors: ['#f44336', '#4caf50', '#2196f3', '#ff9800', '#9c27b0', '#3f51b5'], // Custom colors for the chart
+        dataLabels: {
+            enabled: true,
+            style: {
+                fontSize: '16px',
+                fontWeight: 'bold',
+                colors: ['#fff']
+            },
+            formatter: function (val, opts) {
+                var index = opts.seriesIndex;
+                var percentage = @json($percentages)[index]; // Get the percentage for the current municipality
+                var totalCots = @json($totalCotsArray)[index]; // Get the total number of cots for the current municipality
+                return totalCots + ' cots (' + percentage.toFixed(2) + '%)';
+            }
+        },
+        tooltip: {
+            theme: 'dark',
+            y: {
+                formatter: function (val) {
+                    return val + ' cots';
+                }
+            }
+        },
+        legend: {
+            position: 'bottom',
+            horizontalAlign: 'center',
+            fontSize: '14px',
+            fontWeight: 'bold',
+            markers: {
+                width: 15,
+                height: 15,
+                radius: 5
+            }
+        },
+        plotOptions: {
+            pie: {
+                donut: {
+                    size: '65%',
+                    background: 'transparent',
+                    labels: {
+                        show: true
+                    }
+                }
+            }
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                chart: {
+                    height: 300
+                },
+                dataLabels: {
+                    enabled: true
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    };
 
-            // Show the modal
-            $('#locationModal').modal('show');
-        });
+    var chartPie = new ApexCharts(document.querySelector("#pieChart"), optionsPieChart);
+    chartPie.render();
     </script>
-
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="{{ asset('assets/vendor/libs/jquery/jquery.js')}}"></script>
-    <script src="{{ asset('assets/vendor/libs/popper/popper.js')}}"></script>
-    <script src="{{ asset('assets/vendor/js/bootstrap.js')}}"></script>
-    <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
-    <script src="{{ asset('assets/vendor/js/menu.js')}}"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-    <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
 
     <!-- Main JS -->
     <script src="{{ asset('assets/js/main.js')}}"></script>
-
-    <!-- Page JS -->
-    <script src="{{ asset('assets/js/dashboards-analytics.js')}}"></script>
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-
 </body>
 @endsection

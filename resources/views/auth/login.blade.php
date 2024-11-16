@@ -235,7 +235,7 @@
     </div>
 
     <div class="header">
-        <h1>Welcome to [Your Website Name]</h1>
+        <h1>Welcome to Coral Protector</h1>
         <p>Your go-to resource for Commercial Off-The-Shelf (COTS) solutions. Explore our comprehensive range of COTS products designed to streamline your operations, reduce costs, and enhance efficiency. From software to hardware, our expert-curated selections meet diverse needs with proven reliability and performance. Get insights and make informed decisions with our detailed reports available at the end of each product description. Dive in and discover how COTS can transform your business today!</p>    </div>
 
     <div class="content">

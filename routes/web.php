@@ -32,6 +32,8 @@ Route::middleware('admin')->group(function () {
     Route::post('/save-location', [LocationController::class, 'store'])->name('save-location');
     Route::get('/admin/locations', [LocationController::class, 'index'])->name('admin.location');
     Route::delete('/locations/{id}', [LocationController::class, 'destroy'])->name('locations.destroy');
+    Route::get('/admin/index', [LocationController::class, 'dashboard'])->name('admin.index');
+    Route::get('/admin/index', [LocationController::class, 'dashboard'])->name('admin.index');
 });
 
 // User dashboard routes
@@ -39,5 +41,5 @@ Route::middleware('user')->group(function () {
     Route::get('/user/index', [UserDashboardController::class, 'index'])->name('user.index');
     Route::get('/locations/create', [UserLocationController::class, 'create'])->name('locations.create');
     Route::post('user/locations', [UserLocationController::class, 'store'])->name('user-save-location');
-    Route::get('/locations', [UserLocationController::class, 'index'])->name('user.index');
+    Route::get('user/index', [UserLocationController::class, 'index'])->name('user.index');
 });
