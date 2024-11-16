@@ -148,12 +148,12 @@
                                             <input type="text" class="form-control" id="name" name="name" placeholder="optional">
                                         </div>
                                         <div class="form-group">
-                                            <label for="date_of_sighting">Date of Sighting:</label>
-                                            <input type="date" class="form-control" id="date_of_sighting" name="date_of_sighting">
+                                            <label for="date_of_sighting" >Date of Sighting:</label>
+                                            <input type="date" class="form-control" id="date_of_sighting" name="date_of_sighting" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="time_of_sighting">Time of Sighting:</label>
-                                            <input type="time" class="form-control" id="time_of_sighting" name="time_of_sighting">
+                                            <input type="time" class="form-control" id="time_of_sighting" name="time_of_sighting" required>
                                         </div>
 
                                         <div class="form-group">
