@@ -21,4 +21,4 @@ class Admin
 
         return redirect('/login');
     }
-    }
+}

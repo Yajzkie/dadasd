@@ -42,7 +42,7 @@ Route::middleware('admin')->group(function () {
 });
 
 // User dashboard routes
-Route::middleware('user')->group(function () {
+Route::middleware(['user','auth'])->group(function () {
     Route::get('/user/index', [UserDashboardController::class, 'index'])->name('user.index');
     Route::get('/locations/create', [UserLocationController::class, 'create'])->name('locations.create');
     Route::post('user/locations', [UserLocationController::class, 'store'])->name('user-save-location');

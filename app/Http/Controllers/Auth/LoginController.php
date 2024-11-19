@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Session; // Import the Session facade
 
 class LoginController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest')->except([
+            'signOut', 'dashboard'
+        ]);
+    }
     /**
      * Show the login page.
      *
@@ -50,21 +56,15 @@ class LoginController extends Controller
      */
     public function redirectTo()
     {
-        $user = Auth::user();
-
-        if ($user) {
-            switch ($user->role_id) {
-                case 1:
-                    return '/admin/index';
-                case 2:
-                    return '/user/index';
-
-                default:
-                    return '/login'; // Fallback if no role matches
-            }
+        $userroleid = Auth::user()->role_id;
+        switch ($userroleid) {
+            case 1:
+                return '/admin/index';
+            case 2:
+                return '/user/index';
+            default:
+                return '/login'; // Fallback if no role matches
         }
-
-        return '/login'; // Default fallback
     }
 
     /**
