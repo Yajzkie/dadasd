@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\UserLocation; // Adjust this if you have a specific model for locations
 use App\Models\Location; // Add this line
 use Illuminate\Support\Facades\Auth;
+use App\Models\Municipality;
 
 class UserLocationController extends Controller
 {
     public function index()
     {
         $locations = Location::all();
-        return view('user.index', compact('locations'));
+        $municipalities = Municipality::all();  // Retrieve all municipalities
+        return view('user.index', compact('locations', 'municipalities'));  // Pass municipalities to the view
     }
 
     public function store(Request $request)

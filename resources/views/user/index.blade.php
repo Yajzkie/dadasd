@@ -81,54 +81,8 @@
 </style>
 
 <body>
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
+<div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            <!-- Menu -->
-            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-                <div class="app-brand demo">
-                    <a href="{{ route('admin.index') }}" class="app-brand-link">
-                        <span class="app-brand-logo demo">...</span>
-                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
-                    </a>
-                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-                        <i class="bx bx-chevron-left bx-sm align-middle"></i>
-                    </a>
-                    <span class="name-text ms-5">{{ Auth::user()->name }}</span>
-                </div>
-                <div class="menu-inner-shadow"></div>
-                <ul class="menu-inner py-1">
-                    <li class="menu-item active">
-                        <a href="{{ route('user.index') }}" class="menu-link active">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Analytics">Dashboard</div>
-                        </a>
-                    </li>
-                    <li class="menu-item mt-4">
-                        <a href="{{ route('logout') }}" class="menu-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="menu-icon tf-icons bx bx-log-out"></i>
-                            <div data-i18n="Logout">Logout</div>
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </li>
-                </ul>
-            </aside>
-            <!-- / Menu -->
-
-            <!-- Layout container -->
-            <div class="layout-page">
-                <!-- Navbar -->
-                <nav class="layout-navbar" id="layout-navbar">
-                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                            <i class="bx bx-menu bx-sm"></i>
-                        </a>
-                    </div>
-                </nav>
-                <!-- / Navbar -->
-
                 <div class="content-wrapper">
                     <div id="map" style="height: 100%;"></div>
 
@@ -157,13 +111,11 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label>Municipality</label>
+                                            <label for="municipality">Municipality</label>
                                             <select class="form-control" id="municipality" name="municipality">
-                                                <option value="liloan">liloan</option>
-                                                <option value="libagon">libagon</option>
-                                                <option value="bontoc">bontoc</option>
-                                                <option value="tomas oppus">tomas oppus</option>
-                                                <option value="sogod">sogod</option>
+                                                @foreach($municipalities as $municipality)
+                                                    <option value="{{ $municipality->id }}">{{ $municipality->name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">

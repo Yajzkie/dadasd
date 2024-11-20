@@ -2,73 +2,7 @@
 
 @section('content')
 <body>
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
-        <div class="layout-container">
-            <!-- Menu -->
-            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-                <div class="app-brand demo">
-                    <a href="{{ route('admin.index') }}" class="app-brand-link">
-                        <span class="app-brand-logo demo">...</span>
-                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
-                    </a>
-                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-                        <i class="bx bx-chevron-left bx-sm align-middle"></i>
-                    </a>
-                    <span class="name-text ms-5">{{ Auth::user()->role_id }}</span>
-                </div>
-                <div class="menu-inner-shadow"></div>
-                <ul class="menu-inner py-1">
-                    <li class="menu-item active">
-                        <a href="{{ route('admin.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Analytics">Dashboard</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('admin.location') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-map"></i>
-                            <div data-i18n="Locations">Locations</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('admin.report') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div data-i18n="Users">report</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('admin.adduser') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div data-i18n="Users">Manage Users</div>
-                        </a>
-                    </li>
-                    <li class="menu-item mt-4">
-                        <a href="{{ route('logout') }}" class="menu-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="menu-icon tf-icons bx bx-log-out"></i>
-                            <div data-i18n="Logout">Logout</div>
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </li>
-                </ul>
-            </aside>
-            <!-- / Menu -->
-
-            <!-- Layout container -->
-            <div class="layout-page">
-                <!-- Navbar -->
-                <nav class="layout-navbar" id="layout-navbar">
-                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                            <i class="bx bx-menu bx-sm"></i>
-                        </a>
-                    </div>
-                </nav>
-                <!-- / Navbar -->
-
-                <div class="content-wrapper">
+        <div class="content-wrapper">
                     <div class="container mt-5">
                         <div class="row">
                             <!-- Total Users Card -->

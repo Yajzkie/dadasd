@@ -46,8 +46,11 @@ class User extends Authenticatable
     /**
      * Define the relationship with the Role model.
      */
-    public function role()
-    {
-        return $this->belongsToMany(Role::class, 'role_id'); // Each user belongs to one role
-    }
+// In User.php (User model)
+public function role()
+{
+    return $this->belongsTo(Role::class, 'role_id');
+}
+
+
 }

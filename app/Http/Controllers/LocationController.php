@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Location;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\LocationsExport;  // Make sure to import your export class
+
 
 class LocationController extends Controller
 {
@@ -84,9 +87,35 @@ class LocationController extends Controller
     }
 
     // Method to generate the report
-    public function report()
-    {
-        $locations = Location::paginate(10);  // Limit to 10 rows per page
-        return view('admin.report', compact('locations'));
-    }
+    public function report(Request $request)
+{
+    // Get all unique municipalities
+    $municipalities = Location::distinct()->pluck('municipality');
+
+    // If a municipality is selected, filter by that municipality
+    $locations = Location::when($request->municipality, function ($query) use ($request) {
+        return $query->where('municipality', $request->municipality);
+    })
+    ->paginate(10);  // Limit to 10 rows per page
+
+    return view('admin.report', compact('locations', 'municipalities'));
+}
+
+public function export(Request $request)
+{
+    // Get the selected municipality from the request
+    $municipality = $request->input('municipality');
+
+    // Fetch the locations, optionally filtered by municipality
+    $locations = Location::when($municipality, function ($query, $municipality) {
+        return $query->where('municipality', $municipality);
+    })->get();
+
+    // Generate the filename based on the selected municipality
+    $filename = $municipality ? 'report_' . strtolower($municipality) . '.xlsx' : 'report_all_locations.xlsx';
+
+    // Export the filtered locations and download the file with the dynamic filename
+    return Excel::download(new LocationsExport($locations), $filename);
+}
+
 }
