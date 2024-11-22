@@ -13,31 +13,31 @@
     <ul class="menu-inner py-1">
         <li class="menu-item">
             <a href="{{ route('admin.index') }}" class="menu-link text-dark hover-bg-primary hover-text-white">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon tf-icons bx bx-home-alt"></i>
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
         <li class="menu-item">
             <a href="{{ route('admin.location') }}" class="menu-link text-dark hover-bg-primary hover-text-white">
-                <i class="menu-icon tf-icons bx bx-map"></i>
+                <i class="menu-icon tf-icons bx bx-location-plus"></i>
                 <div data-i18n="Locations">Locations</div>
             </a>
         </li>
         <li class="menu-item">
             <a href="{{ route('admin.report') }}" class="menu-link text-dark hover-bg-primary hover-text-white">
-                <i class="menu-icon tf-icons bx bx-user"></i>
+                <i class="menu-icon tf-icons bx bx-bar-chart-alt"></i>
                 <div data-i18n="Users">Report</div>
             </a>
         </li>
         <li class="menu-item">
             <a href="{{ route('admin.adduser') }}" class="menu-link text-dark hover-bg-primary hover-text-white">
-                <i class="menu-icon tf-icons bx bx-user"></i>
+                <i class="menu-icon tf-icons bx bx-user-circle"></i>
                 <div data-i18n="Users">Manage Users</div>
             </a>
         </li>
         <li class="menu-item">
             <a href="{{ route('admin.municipal') }}" class="menu-link text-dark hover-bg-primary hover-text-white">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <i class="menu-icon tf-icons bx bx-building"></i>
                 <div data-i18n="Analytics">Municipal</div>
             </a>
         </li>

@@ -28,18 +28,19 @@
             </thead>
             <tbody>
             @foreach($municipalities as $municipality)
-    <tr>
-        <td>{{ $municipality->name }}</td>
-        <td>
-            <a href="#" class="btn btn-info btn-sm">Edit</a>
-            <form action="{{ route('admin.municipal.destroy', $municipality->id) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
-        </td>
-    </tr>
-@endforeach
+                <tr>
+                    <td>{{ $municipality->name }}</td>
+                    <td>
+                    <form action="{{  route('admin.municipal.destroy', $municipality->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?');">
+                                <i class="bx bx-trash"></i> <!-- Replace this with your preferred icon -->
+                            </button>
+                    </form>
+                    </td>
+                </tr>
+            @endforeach
 
             </tbody>
         </table>
