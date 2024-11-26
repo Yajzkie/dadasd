@@ -22,6 +22,14 @@
         background: linear-gradient(145deg, #f3f4f6, #ffffff);
     }
 
+    .modal-header p {
+    font-size: 0.9rem;
+    color: #ffffff;
+    margin: 0;
+    padding-top: 5px;
+    }
+
+
     /* Modal Header */
     .modal-header {
         background-color: #0056b3;
@@ -85,33 +93,59 @@
         <div class="layout-container">
                 <div class="content-wrapper">
                     <div id="map" style="height: 100%;"></div>
+                    <!-- Consent Modal -->
+                        <div class="modal fade" id="consentModal" tabindex="-1" aria-labelledby="consentModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="consentModalLabel">Data Privacy Consent</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            By clicking "I Agree," you consent to the collection and processing of your data for research and monitoring purposes, in accordance with applicable data privacy laws.
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" id="agreeConsent">I Agree</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
                     <!-- Modal -->
                     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="locationModalLabel">Add Location</h5>
+                                    <div>
+                                        <h5 class="modal-title" id="locationModalLabel">Data Privacy Consent</h5>
+                                        <p style="font-size: 0.9rem; margin-top: 8px;">
+                                            By providing the information below, you consent to the collection and processing of your data for research and monitoring purposes, in accordance with applicable data privacy laws.
+                                        </p>
+                                    </div>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <form action="{{ route('user-save-location') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-body">
+                                        <!-- Form Fields -->
                                         <div class="form-group">
                                             <label for="name">Name:</label>
                                             <input type="text" class="form-control" id="name" name="name" placeholder="optional">
                                         </div>
                                         <div class="form-group">
-                                            <label for="date_of_sighting" >Date of Sighting:</label>
+                                            <label for="date_of_sighting" >Date of COTS Sighting:</label>
                                             <input type="date" class="form-control" id="date_of_sighting" name="date_of_sighting" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="time_of_sighting">Time of Sighting:</label>
+                                            <label for="time_of_sighting">Time of COTS Sighting:</label>
                                             <input type="time" class="form-control" id="time_of_sighting" name="time_of_sighting" required>
                                         </div>
-
                                         <div class="form-group">
-                                            <label for="municipality">Municipality</label>
+                                            <label for="municipality">Municipality Where COTS sighted</label>
                                             <select class="form-control" id="municipality" name="municipality">
                                                 @foreach($municipalities as $municipality)
                                                     <option value="{{ $municipality->id }}">{{ $municipality->name }}</option>
@@ -122,7 +156,6 @@
                                             <label>Number of COTS in 10x10 area:</label>
                                             <input type="number" class="form-control" id="number_of_cots" name="number_of_cots" min="1" required placeholder="Enter number of cots">
                                         </div>
-
                                         <div class="form-group">
                                             <label>Size of COTS:</label>
                                             <select class="form-control" id="size_of_cots" name="size_of_cots">
@@ -134,8 +167,7 @@
                                         <div class="form-group">
                                             <label for="activity_type">Type of Activity:</label>
                                             <select class="form-control" id="activity_type" name="activity_type">
-                                                <option value="fishing/namasol">Fishing/namasol</option>
-                                                <option value="fishing/bangka fishing">Fishing/bangka fishing</option>
+                                                <option value="fishing/namasol">Fishing</option>
                                                 <option value="underwater photography">Underwater Photography / Video</option>
                                                 <option value="snorkeling">Snorkeling / Free Diving / Swimming</option>
                                                 <option value="recreational diving">Recreational / Scuba Diving</option>
@@ -146,7 +178,6 @@
                                             <!-- Custom input for "Other" activity -->
                                             <input type="text" class="form-control mt-2 d-none" id="custom_activity" name="custom_activity" placeholder="Please specify activity">
                                         </div>
-
                                         <div class="form-group">
                                             <label for="observer_category">Observer Category:</label>
                                             <select class="form-control" id="observer_category" name="observer_category">
@@ -185,7 +216,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -298,34 +328,50 @@ map.fitBounds(polygon.getBounds());
         var marker{{ $location->id }} = L.marker([{{ $location->latitude }}, {{ $location->longitude }}]).addTo(map);
     @endforeach
 
-    // Global marker variable for new markers
-    var marker;
+// Global marker variable for new markers
+var marker;
 
-    // Click event to place a new marker
-    map.on('click', function(e) {
-        var clickedPoint = e.latlng;
+// Click event to place a new marker
+map.on('click', function (e) {
+    var clickedPoint = e.latlng;
 
-        // Check if the clicked point is inside the polygon
-        var inside = false;
-        polygon.eachLayer(function(layer) {
-            if (layer.getBounds().contains(clickedPoint)) {
-                inside = true;
-            }
-        });
-
-        if (inside) {
-            if (marker) {
-                map.removeLayer(marker); // Remove existing marker
-            }
-            marker = L.marker(clickedPoint).addTo(map); // Place new marker
-            document.getElementById('latitude').value = clickedPoint.lat;
-            document.getElementById('longitude').value = clickedPoint.lng;
-
-            // Show the modal
-            $('#locationModal').modal('show');
-        } else {
-            alert("You can only place markers inside the sogod bay.");
+    // Check if the clicked point is inside the polygon
+    var inside = false;
+    polygon.eachLayer(function (layer) {
+        if (layer.getBounds().contains(clickedPoint)) {
+            inside = true;
         }
+    });
+
+    if (inside) {
+        if (marker) {
+            map.removeLayer(marker); // Remove existing marker
+        }
+        marker = L.marker(clickedPoint).addTo(map); // Place new marker
+
+        // Temporarily store the coordinates
+        document.getElementById('latitude').value = clickedPoint.lat;
+        document.getElementById('longitude').value = clickedPoint.lng;
+
+        // Show the consent modal
+        $('#consentModal').modal('show');
+    } else {
+        alert("You can only place markers inside the sogod bay.");
+    }
+});
+
+// Handle "Agree" button click in consent modal
+document.getElementById('agreeConsent').addEventListener('click', function () {
+    $('#consentModal').modal('hide'); // Hide consent modal
+    $('#locationModal').modal('show'); // Show location modal
+});
+
+// Handle "Cancel" button in consent modal
+document.querySelector('.btn-secondary[data-bs-dismiss="modal"]').addEventListener('click', function () {
+    if (marker) {
+        map.removeLayer(marker); // Remove marker if consent is not given
+        marker = null;
+    }
     });
 </script>
 
