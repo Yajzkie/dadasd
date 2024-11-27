@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\UserLocation; // Adjust this if you have a specific model for locations
 use App\Models\Location; // Add this line
 use Illuminate\Support\Facades\Auth;
 use App\Models\Municipality;
@@ -21,7 +20,7 @@ class UserLocationController extends Controller
         // Validate the request
         $request->validate([
             'name' => 'nullable|string',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'number_of_cots' => 'nullable|string',
@@ -50,7 +49,7 @@ class UserLocationController extends Controller
         // Create a new location using the request data
         Location::create([
             'name' => $request->name ?? null,
-            'description' => $request->description,
+            'description' => $request->description ?? null,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'number_of_cots' => $request->number_of_cots,

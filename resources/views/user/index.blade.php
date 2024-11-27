@@ -2,7 +2,6 @@
 
 @section('content')
 <style>
-    /* Modal Overlay */
     .modal.fade .modal-dialog {
         transform: scale(0.8);
         opacity: 0;
@@ -12,8 +11,6 @@
         transform: scale(1);
         opacity: 1;
     }
-
-    /* Modal Content */
     .modal-content {
         border-radius: 12px;
         border: none;
@@ -30,7 +27,6 @@
     }
 
 
-    /* Modal Header */
     .modal-header {
         background-color: #0056b3;
         color: white;
@@ -51,7 +47,6 @@
         opacity: 1;
     }
 
-    /* Modal Form */
     .form-group label {
         color: #333;
         font-weight: 500;
@@ -66,7 +61,6 @@
         box-shadow: 0 0 8px rgba(0, 86, 179, 0.2);
     }
 
-    /* Modal Buttons */
     .btn-primary {
         background-color: #0056b3;
         border: none;
@@ -93,7 +87,6 @@
         <div class="layout-container">
                 <div class="content-wrapper">
                     <div id="map" style="height: 100%;"></div>
-                    <!-- Consent Modal -->
                         <div class="modal fade" id="consentModal" tabindex="-1" aria-labelledby="consentModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -115,7 +108,6 @@
                         </div>
 
 
-                    <!-- Modal -->
                     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -131,7 +123,6 @@
             <form action="{{ route('user-save-location') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <!-- Form Fields -->
                     <div class="form-group">
                         <label for="name">Name:</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="optional">
@@ -156,8 +147,6 @@
                         <label class="me-3" style="min-width: 150px;">Size of COTS</label>
                         <label class="me-3" style="min-width: 150px;">Number  of COTS</label>
                     </div>
-
-                    <!-- Add margin-top to space out the "Early Juvenile" field -->
                     <div class="form-group d-flex align-items-center justify-content-between" style="margin-top: 15px;">
                         <label for="early_juvenile" class="me-3" style="min-width: 150px;">Early Juvenile:</label>
                         <input type="number" class="form-control" id="early_juvenile" name="early_juvenile" min="1"  placeholder="Enter number of COTS">
@@ -190,7 +179,6 @@
                             <option value="spear fishing">Spear fishing</option>
                             <option value="other">Other</option>
                         </select>
-                        <!-- Custom input for "Other" activity -->
                         <input type="text" class="form-control mt-2 d-none" id="custom_activity" name="custom_activity" placeholder="Please specify activity">
                     </div>
                     <div class="form-group">
@@ -203,7 +191,6 @@
                             <option value="independent researcher">SLSU Researcher</option>
                             <option value="other">Other</option>
                         </select>
-                        <!-- Custom input for "Other" observer -->
                         <input type="text" class="form-control mt-2 d-none" id="custom_observer" name="custom_observer" placeholder="Please specify observer category">
                     </div>
                     <div class="form-group">
@@ -286,57 +273,36 @@
                         [124.96679966471498, 10.251174429415457],
                         [124.97227916647046, 10.19319895491995],
                         [124.99563995681876, 10.145185088583375],
-                        [125.02515501453013, 10.032553784991762]  // Back to the start
+                        [125.02515501453013, 10.032553784991762]
                     ]
                 ]
             }
         }
     ]
 };
-// Add the slightly larger GeoJSON polygon to the map
+
 var polygon = L.geoJSON(geoJsonPolygon, {
     style: function () {
         return {
-            color: "#0000FF",  // Border color (still defined, but will be invisible)
-            weight: 2,         // Border thickness
-            opacity: 1,        // Make the border fully transparent
-            fillOpacity: 0     // No fill color
+            color: "#0000FF",  
+            weight: 2,         
+            opacity: 1,        
+            fillOpacity: 0     
         };
     }
 }).addTo(map);
 
-// Fit map to the new polygon bounds
 map.fitBounds(polygon.getBounds());
 
-
-// Add smaller GeoJSON polygon to the map
-var polygon = L.geoJSON(geoJsonPolygon, {
-    style: function () {
-        return {
-            color: "#0000FF",  // Border color (still defined, but will be invisible)
-            weight: 2,         // Border thickness
-            opacity: 1,        // Make the border fully transparent
-            fillOpacity: 0     // No fill color
-        };
-    }
-}).addTo(map);
-
-// Fit map to smaller polygon bounds
-map.fitBounds(polygon.getBounds());
-
-    // Loop through each location from the backend and add markers
     @foreach ($locations as $location)
         var marker{{ $location->id }} = L.marker([{{ $location->latitude }}, {{ $location->longitude }}]).addTo(map);
     @endforeach
 
-// Global marker variable for new markers
 var marker;
 
-// Click event to place a new marker
 map.on('click', function (e) {
     var clickedPoint = e.latlng;
 
-    // Check if the clicked point is inside the polygon
     var inside = false;
     polygon.eachLayer(function (layer) {
         if (layer.getBounds().contains(clickedPoint)) {
@@ -346,31 +312,26 @@ map.on('click', function (e) {
 
     if (inside) {
         if (marker) {
-            map.removeLayer(marker); // Remove existing marker
+            map.removeLayer(marker); 
         }
-        marker = L.marker(clickedPoint).addTo(map); // Place new marker
+        marker = L.marker(clickedPoint).addTo(map);
 
-        // Temporarily store the coordinates
         document.getElementById('latitude').value = clickedPoint.lat;
         document.getElementById('longitude').value = clickedPoint.lng;
 
-        // Show the consent modal
         $('#consentModal').modal('show');
     } else {
         alert("You can only place markers inside the sogod bay.");
     }
 });
 
-// Handle "Agree" button click in consent modal
 document.getElementById('agreeConsent').addEventListener('click', function () {
-    $('#consentModal').modal('hide'); // Hide consent modal
-    $('#locationModal').modal('show'); // Show location modal
-});
+    $('#consentModal').modal('hide'); 
+    $('#locationModal').modal('show'); 
 
-// Handle "Cancel" button in consent modal
 document.querySelector('.btn-secondary[data-bs-dismiss="modal"]').addEventListener('click', function () {
     if (marker) {
-        map.removeLayer(marker); // Remove marker if consent is not given
+        map.removeLayer(marker); 
         marker = null;
     }
     });
@@ -398,36 +359,29 @@ document.querySelector('.btn-secondary[data-bs-dismiss="modal"]').addEventListen
         }
     });
 
-    // When the form is submitted, append the custom input value if provided
     document.querySelector('form').addEventListener('submit', function() {
-        // If "Other" is selected for activity type and custom input is provided
         var activitySelect = document.getElementById('activity_type');
         var customActivityInput = document.getElementById('custom_activity');
         if (activitySelect.value === 'other' && customActivityInput.value) {
-            activitySelect.value = customActivityInput.value; // Override the value with the custom input
+            activitySelect.value = customActivityInput.value; 
         }
 
-        // If "Other" is selected for observer category and custom input is provided
         var observerSelect = document.getElementById('observer_category');
         var customObserverInput = document.getElementById('custom_observer');
         if (observerSelect.value === 'other' && customObserverInput.value) {
-            observerSelect.value = customObserverInput.value; // Override the value with the custom input
-        }
+            observerSelect.value = customObserverInput.value;
     });
 </script>
 <script>
     // Function to update the total of COTS
     function updateTotal() {
-        // Get values from the input fields and parse them as integers (default to 0 if empty)
         let earlyJuvenile = parseInt(document.getElementById('early_juvenile').value) || 0;
         let juvenile = parseInt(document.getElementById('juvenile').value) || 0;
         let subAdult = parseInt(document.getElementById('sub_adult').value) || 0;
         let adult = parseInt(document.getElementById('adult').value) || 0;
 
-        // Calculate the total
         let total = earlyJuvenile + juvenile + subAdult + adult;
 
-        // Update the total field
         document.getElementById('number_of_cots').value = total;
     }
 
