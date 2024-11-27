@@ -70,7 +70,10 @@
                       <p><strong>Date of Sighting:</strong> {{ $location->date_of_sighting }}</p>
                       <p><strong>Time of Sighting:</strong> {{ $location->time_of_sighting }}</p>
                       <p><strong>Number of COTS:</strong> {{ $location->number_of_cots ?? 'N/A' }}</p>
-                      <p><strong>Size of COTS:</strong> {{ $location->size_of_cots ?? 'N/A' }}</p>
+                      <p><strong>Early juvenile:</strong> {{ $location->early_juvenile ?? 'N/A' }}</p>
+                      <p><strong>Juvenile:</strong> {{ $location->juvenile ?? 'N/A' }}</p>
+                      <p><strong>Sub Adult:</strong> {{ $location->sub_adult ?? 'N/A' }}</p>
+                      <p><strong>Adult:</strong> {{ $location->adult ?? 'N/A' }}</p>
                       <p><strong>Activity Type:</strong> {{ $location->activity_type ?? 'N/A' }}</p>
                       <p><strong>Observer Category:</strong> {{ $location->observer_category ?? 'N/A' }}</p>
                       <small class="text-muted">Saved on: {{ \Carbon\Carbon::parse($location->created_at)->format('F j, Y, g:i a') }}</small>

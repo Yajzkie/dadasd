@@ -16,48 +16,60 @@ class UserLocationController extends Controller
         $municipalities = Municipality::all();  // Retrieve all municipalities
         return view('user.index', compact('locations', 'municipalities'));  // Pass municipalities to the view
     }
-
     public function store(Request $request)
     {
+        // Validate the request
         $request->validate([
             'name' => 'nullable|string',
             'description' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'number_of_cots' => 'nullable|string',
-            'size_of_cots' => 'nullable|string',
+            'early_juvenile' => 'nullable|integer',
+            'juvenile' => 'nullable|integer',
+            'sub_adult' => 'nullable|integer',
+            'adult' => 'nullable|integer',
             'activity_type' => 'nullable|string',
             'observer_category' => 'nullable|string',
             'municipality' => 'nullable|string',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
-            'date_of_sighting' => 'nullable|date', // Validation for date
-            'time_of_sighting' => 'nullable|date_format:H:i', // Validation for time
+            'date_of_sighting' => 'nullable|date',
+            'time_of_sighting' => 'nullable|date_format:H:i',
         ]);
-        
-
-        $location = new Location();
-        $location->name = $request->name ?? null;
-        $location->description = $request->description;
-        $location->latitude = $request->latitude;
-        $location->longitude = $request->longitude;
-        $location->number_of_cots = $request->number_of_cots;
-        $location->size_of_cots = $request->size_of_cots;
-        $location->activity_type = $request->activity_type;
-        $location->observer_category = $request->observer_category;
-        $location->municipality = $request->municipality;
-        $location->date_of_sighting = $request->date_of_sighting; // Adding date
-        $location->time_of_sighting = $request->time_of_sighting; // Adding time
-        
+    
+        // Handle the photo upload
+        $photoPath = null;
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('photos', 'public');
-            $location->photo = $photoPath;
+            $photoPath = $request->file('photo')->storeAs(
+                'photos', 
+                uniqid() . '.' . $request->file('photo')->getClientOriginalExtension(), 
+                'public'
+            );
         }
-        
-        $location->save();
-        
-
-        return redirect()->route('user.index');
+    
+        // Create a new location using the request data
+        Location::create([
+            'name' => $request->name ?? null,
+            'description' => $request->description,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'number_of_cots' => $request->number_of_cots,
+            'early_juvenile' => $request->early_juvenile ?? null,
+            'juvenile' => $request->juvenile ?? null,
+            'sub_adult' => $request->sub_adult ?? null,
+            'adult' => $request->adult ?? null,
+            'activity_type' => $request->activity_type,
+            'observer_category' => $request->observer_category,
+            'municipality' => $request->municipality,
+            'date_of_sighting' => $request->date_of_sighting,
+            'time_of_sighting' => $request->time_of_sighting,
+            'photo' => $photoPath, // If photo exists, store its path
+        ]);
+    
+        // Redirect with a success message
+        return redirect()->route('user.index')->with('success', 'Location saved successfully.');
     }
+    
 
     public function destroy($id)
     {

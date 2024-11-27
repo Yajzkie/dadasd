@@ -117,105 +117,121 @@
 
                     <!-- Modal -->
                     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <div>
-                                        <h5 class="modal-title" id="locationModalLabel">Data Privacy Consent</h5>
-                                        <p style="font-size: 0.9rem; margin-top: 8px;">
-                                            By providing the information below, you consent to the collection and processing of your data for research and monitoring purposes, in accordance with applicable data privacy laws.
-                                        </p>
-                                    </div>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <form action="{{ route('user-save-location') }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="modal-body">
-                                        <!-- Form Fields -->
-                                        <div class="form-group">
-                                            <label for="name">Name:</label>
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="optional">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="date_of_sighting" >Date of COTS Sighting:</label>
-                                            <input type="date" class="form-control" id="date_of_sighting" name="date_of_sighting" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="time_of_sighting">Time of COTS Sighting:</label>
-                                            <input type="time" class="form-control" id="time_of_sighting" name="time_of_sighting" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="municipality">Municipality Where COTS sighted</label>
-                                            <select class="form-control" id="municipality" name="municipality">
-                                                @foreach($municipalities as $municipality)
-                                                    <option value="{{ $municipality->id }}">{{ $municipality->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Number of COTS in 10x10 area:</label>
-                                            <input type="number" class="form-control" id="number_of_cots" name="number_of_cots" min="1" required placeholder="Enter number of cots">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Size of COTS:</label>
-                                            <select class="form-control" id="size_of_cots" name="size_of_cots">
-                                                <option value="small">Small (1-10 cm)</option>
-                                                <option value="medium">Medium (11-30 cm)</option>
-                                                <option value="large">Large (31 cm or larger)</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="activity_type">Type of Activity:</label>
-                                            <select class="form-control" id="activity_type" name="activity_type">
-                                                <option value="fishing/namasol">Fishing</option>
-                                                <option value="underwater photography">Underwater Photography / Video</option>
-                                                <option value="snorkeling">Snorkeling / Free Diving / Swimming</option>
-                                                <option value="recreational diving">Recreational / Scuba Diving</option>
-                                                <option value="shore gleaning">Shore gleaning</option>
-                                                <option value="spear fishing">Spear fishing</option>
-                                                <option value="other">Other</option>
-                                            </select>
-                                            <!-- Custom input for "Other" activity -->
-                                            <input type="text" class="form-control mt-2 d-none" id="custom_activity" name="custom_activity" placeholder="Please specify activity">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="observer_category">Observer Category:</label>
-                                            <select class="form-control" id="observer_category" name="observer_category">
-                                                <option value="fisherfolks">Fisherfolks</option>
-                                                <option value="barangay residents">Barangay Residents</option>
-                                                <option value="local government">Local Government Unit (LGU)</option>
-                                                <option value="independent researcher">Independent Researcher</option>
-                                                <option value="independent researcher">SLSU Researcher</option>
-                                                <option value="other">Other</option>
-                                            </select>
-                                            <!-- Custom input for "Other" observer -->
-                                            <input type="text" class="form-control mt-2 d-none" id="custom_observer" name="custom_observer" placeholder="Please specify observer category">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="latitude">Latitude:</label>
-                                            <input type="number" step="any" class="form-control" id="latitude" name="latitude" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="longitude">Longitude:</label>
-                                            <input type="number" step="any" class="form-control" id="longitude" name="longitude" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="photo">Photo:</label>
-                                            <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="description">Additional Comments or Observations:</label>
-                                            <textarea class="form-control" id="description" name="description"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save Location</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title" id="locationModalLabel">Data Privacy Consent</h5>
+                    <p style="font-size: 0.9rem; margin-top: 8px;">
+                        By providing the information below, you consent to the collection and processing of your data for research and monitoring purposes, in accordance with applicable data privacy laws.
+                    </p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{ route('user-save-location') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <!-- Form Fields -->
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="optional">
                     </div>
+                    <div class="form-group">
+                        <label for="date_of_sighting">Date of COTS Sighting:</label>
+                        <input type="date" class="form-control" id="date_of_sighting" name="date_of_sighting" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time_of_sighting">Time of COTS Sighting:</label>
+                        <input type="time" class="form-control" id="time_of_sighting" name="time_of_sighting" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="municipality">Municipality Where COTS sighted</label>
+                        <select class="form-control" id="municipality" name="municipality">
+                            @foreach($municipalities as $municipality)
+                                <option value="{{ $municipality->id }}">{{ $municipality->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group d-flex align-items-center justify-content-between" style="margin-top: 15px;">
+                        <label class="me-3" style="min-width: 150px;">Size of COTS</label>
+                        <label class="me-3" style="min-width: 150px;">Number  of COTS</label>
+                    </div>
+
+                    <!-- Add margin-top to space out the "Early Juvenile" field -->
+                    <div class="form-group d-flex align-items-center justify-content-between" style="margin-top: 15px;">
+                        <label for="early_juvenile" class="me-3" style="min-width: 150px;">Early Juvenile:</label>
+                        <input type="number" class="form-control" id="early_juvenile" name="early_juvenile" min="1"  placeholder="Enter number of COTS">
+                    </div>
+
+                    <div class="form-group d-flex align-items-center justify-content-between">
+                        <label for="juvenile" class="me-3" style="min-width: 150px;">Juvenile:</label>
+                        <input type="number" class="form-control" id="juvenile" name="juvenile" min="1"  placeholder="Enter number of COTS">
+                    </div>
+                    <div class="form-group d-flex align-items-center justify-content-between">
+                        <label for="sub_adult" class="me-3" style="min-width: 150px;">Sub Adult:</label>
+                        <input type="number" class="form-control" id="sub_adult" name="sub_adult" min="1"  placeholder="Enter number of COTS">
+                    </div>
+                    <div class="form-group d-flex align-items-center justify-content-between">
+                        <label for="adult" class="me-3" style="min-width: 150px;">Adult:</label>
+                        <input type="number" class="form-control" id="adult" name="adult" min="1"  placeholder="Enter number of COTS">
+                    </div>
+                    <div class="form-group">
+                        <label>total of cots:</label>
+                        <input type="number" class="form-control" id="number_of_cots" name="number_of_cots" min="1"  placeholder="Enter number of COTS">
+                    </div>
+                    <div class="form-group">
+                        <label for="activity_type">Type of Activity:</label>
+                        <select class="form-control" id="activity_type" name="activity_type">
+                            <option value="fishing/namasol">Fishing</option>
+                            <option value="underwater photography">Underwater Photography / Video</option>
+                            <option value="snorkeling">Snorkeling / Free Diving / Swimming</option>
+                            <option value="recreational diving">Recreational / Scuba Diving</option>
+                            <option value="shore gleaning">Shore gleaning</option>
+                            <option value="spear fishing">Spear fishing</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <!-- Custom input for "Other" activity -->
+                        <input type="text" class="form-control mt-2 d-none" id="custom_activity" name="custom_activity" placeholder="Please specify activity">
+                    </div>
+                    <div class="form-group">
+                        <label for="observer_category">Observer Category:</label>
+                        <select class="form-control" id="observer_category" name="observer_category">
+                            <option value="fisherfolks">Fisherfolks</option>
+                            <option value="barangay residents">Barangay Residents</option>
+                            <option value="local government">Local Government Unit (LGU)</option>
+                            <option value="independent researcher">Independent Researcher</option>
+                            <option value="independent researcher">SLSU Researcher</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <!-- Custom input for "Other" observer -->
+                        <input type="text" class="form-control mt-2 d-none" id="custom_observer" name="custom_observer" placeholder="Please specify observer category">
+                    </div>
+                    <div class="form-group">
+                        <label for="latitude">Latitude:</label>
+                        <input type="number" step="any" class="form-control" id="latitude" name="latitude" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="longitude">Longitude:</label>
+                        <input type="number" step="any" class="form-control" id="longitude" name="longitude" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo">Photo:</label>
+                        <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Additional Comments or Observations:</label>
+                        <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Location</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
                 </div>
             </div>
         </div>
@@ -308,21 +324,6 @@ var polygon = L.geoJSON(geoJsonPolygon, {
 // Fit map to smaller polygon bounds
 map.fitBounds(polygon.getBounds());
 
-    // Add GeoJSON polygon to the map with a transparent border
-    var polygon = L.geoJSON(geoJsonPolygon, {
-        style: function () {
-            return {
-                color: "#0000FF",  // Border color (still defined, but will be invisible)
-                weight: 2,         // Border thickness
-                opacity: 1,        // Make the border fully transparent
-                fillOpacity: 0     // No fill color
-            };
-        }
-    }).addTo(map);
-
-    // Fit map to polygon bounds
-    map.fitBounds(polygon.getBounds());
-
     // Loop through each location from the backend and add markers
     @foreach ($locations as $location)
         var marker{{ $location->id }} = L.marker([{{ $location->latitude }}, {{ $location->longitude }}]).addTo(map);
@@ -413,6 +414,29 @@ document.querySelector('.btn-secondary[data-bs-dismiss="modal"]').addEventListen
             observerSelect.value = customObserverInput.value; // Override the value with the custom input
         }
     });
+</script>
+<script>
+    // Function to update the total of COTS
+    function updateTotal() {
+        // Get values from the input fields and parse them as integers (default to 0 if empty)
+        let earlyJuvenile = parseInt(document.getElementById('early_juvenile').value) || 0;
+        let juvenile = parseInt(document.getElementById('juvenile').value) || 0;
+        let subAdult = parseInt(document.getElementById('sub_adult').value) || 0;
+        let adult = parseInt(document.getElementById('adult').value) || 0;
+
+        // Calculate the total
+        let total = earlyJuvenile + juvenile + subAdult + adult;
+
+        // Update the total field
+        document.getElementById('number_of_cots').value = total;
+    }
+
+    // Attach the updateTotal function to the input event for each relevant field
+    document.getElementById('early_juvenile').addEventListener('input', updateTotal);
+    document.getElementById('juvenile').addEventListener('input', updateTotal);
+    document.getElementById('sub_adult').addEventListener('input', updateTotal);
+    document.getElementById('adult').addEventListener('input', updateTotal);
+
 </script>
 
     <!-- build:js assets/vendor/js/core.js -->
