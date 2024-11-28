@@ -202,6 +202,7 @@
                         <option value="fisherfolks">Fisherfolks</option>
                         <option value="barangay residents">Barangay Residents</option>
                         <option value="local government">Local Government Unit (LGU)</option>
+                        <option value="advocacy groups">Advocacy Group (ex. dap ag boys)</option>
                         <option value="independent researcher">Independent Researcher</option>
                         <option value="independent researcher">SLSU Researcher</option>
                         <option value="other">Other</option>
