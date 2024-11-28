@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'COTS Southern Leyte')</title>
+    <title>@yield('title', 'COTS Tracker')</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -64,7 +64,7 @@
         <!-- First Slide: Header and Login Section -->
         <div class="carousel-item active">
             <div class="header text-center">
-                <h1>Welcome to Coral Protector</h1>
+                <h1>Welcome to COTS Tracker</h1>
                 <p>Your go-to resource for Commercial Off-The-Shelf (COTS) solutions. Explore 
                     our comprehensive range of COTS products designed to streamline your operations, reduce costs, and enhance 
                     efficiency. From software to hardware, our expert-curated selections meet
@@ -75,7 +75,7 @@
                 <!-- Login Container -->
                 <div class="login-container">
                     <div class="bg-white shadow p-4 rounded">
-                        <h5 class="text-center mb-3">Login to Coral Protector</h5>
+                        <h5 class="text-center mb-3">Login to COTS Tracker</h5>
                         <p1 class="text-center mb-4">Please sign-in to your account and start the adventure</p1>
 
                         <!-- Display login error message if available -->

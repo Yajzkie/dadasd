@@ -4,11 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Coral Protector</title>
+    <title>COTS Tracker</title>
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico')}}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png')}}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,7 +18,6 @@
     <!-- Icons -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/boxicons.css')}}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/core.css')}}" class="template-customizer-core-css" />
@@ -47,20 +46,90 @@
             padding: 0;
         }
 
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 150px;
+            right: 0;
+            z-index: 1000;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+        }
+
         #map {
-            width: 100%;
-            height: 100vh;
+            width: 90%;
+            height: 50%;
+            margin-top: 0px;
+            margin-left: 50px;
+        }
+
+        .layout-page {
+            margin-top: 80px;
+        }
+
+        .user-role {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .navbar-nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-nav-right .nav-item {
+            margin-left: 15px;
+        }
+
+        /* Modal Style */
+        .modal-content {
+            padding: 20px;
+        }
+
+        /* Inbox Dropdown */
+        .inbox-dropdown .dropdown-menu {
+            max-height: 300px;
+            overflow-y: auto;
         }
     </style>
 </head>
 <body>
+<nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme fixed-top" id="layout-navbar">
+    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+            <i class="bx bx-menu bx-sm"></i>
+        </a>
+    </div>
+
+    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+        <ul class="navbar-nav flex-row align-items-center ms-auto">
+            <li class="nav-item inbox-dropdown dropdown">
+                <a class="nav-link px-0" href="#" id="inboxDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-envelope" style="font-size: 1.5rem;"></i> <!-- Inbox Icon -->
+                    <span class="badge bg-danger"></span> <!-- Show count of new locations -->
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="inboxDropdown">
+                    <li><a class="dropdown-item" href="#">
+                        New location added in: 
+                    </a></li>
+                </ul>
+            </li>
+            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                <span class="user-role">
+                    {{ Auth::user()->role->role_name }}
+                </span>
+            </li>
+        </ul>
+    </div>
+</nav>
+
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            <!-- Conditionally Include Menu Based on User Role -->
             @if(auth()->user()->role->role_name == 'admin')
-                @include('admin.menu') <!-- Admin Menu -->
+                @include('admin.menu')
             @else
-                @include('user.menu')  <!-- User Menu -->
+                @include('user.menu')
             @endif
 
             <div class="layout-page">
@@ -71,9 +140,12 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
 </body>
 </html>

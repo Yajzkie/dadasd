@@ -20,6 +20,7 @@ class Location extends Model
         'juvenile',
         'sub_adult',
         'adult',
+        'late_adult',
         'activity_type',
         'observer_category',
         'municipality',

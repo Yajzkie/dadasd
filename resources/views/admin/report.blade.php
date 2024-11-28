@@ -9,9 +9,8 @@
             <i class="bx bx-map"></i> Location Report
         </h5>
         <a href="{{ route('admin.report.export', ['municipality' => request('municipality')]) }}" class="btn btn-success">
-    <i class="bx bx-download"></i> Export
-</a>
-
+            <i class="bx bx-download"></i> Export
+        </a>
     </div>
 
     <!-- Filter Dropdown at the Upper Left -->
@@ -42,24 +41,24 @@
         <table class="table table-hover table-striped table-sm table-bordered m-0">
             <thead class="table-dark">
                 <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Municipality</th>
-                    <th>Number of Cots</th>
-                    <th>Size of Cots</th>
-                    <th>Photo</th>
+                    <th style="width: 5%; color: white;">#</th>
+                    <th style="width: 10%; color: white;">Name</th>
+                    <th style="width: 15%; color: white;">Municipality where COTS are Sighted</th>
+                    <th style="width: 5%; color: white;">Number of Cots</th>
+                    <th style="width: 5%; color: white;">Date of COTS Sighted</th>
+                    <th style="width: 5%; color: white;">Time of COTS Sighted</th>
+                    <th style="width: 10%; color: white;">Photo</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($locations as $location)
                     <tr>
-                        <td>{{ $loop->iteration }}</td> <!-- Display incrementing number -->
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $location->name }}</td>
-                        <td>{{ $location->description }}</td>
                         <td>{{ $location->municipality }}</td>
                         <td>{{ $location->number_of_cots }}</td>
-                        <td>{{ $location->size_of_cots }}</td>
+                        <td>{{ $location->date_of_sighting}}</td>
+                        <td>{{ $location->time_of_sighting}}</td>
                         <td>
                             @if($location->photo)
                                 <img src="{{ asset('storage/' . $location->photo) }}" alt="Location Photo" class="img-fluid rounded" style="max-width: 70px;">

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Location; // Add this line
+use App\Models\Location;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Municipality;
 
@@ -28,6 +28,7 @@ class UserLocationController extends Controller
             'juvenile' => 'nullable|integer',
             'sub_adult' => 'nullable|integer',
             'adult' => 'nullable|integer',
+            'late_adult' => 'nullable|integer',
             'activity_type' => 'nullable|string',
             'observer_category' => 'nullable|string',
             'municipality' => 'nullable|string',
@@ -57,6 +58,7 @@ class UserLocationController extends Controller
             'juvenile' => $request->juvenile ?? null,
             'sub_adult' => $request->sub_adult ?? null,
             'adult' => $request->adult ?? null,
+            'late_adult' => $request->late_adult ?? null,
             'activity_type' => $request->activity_type,
             'observer_category' => $request->observer_category,
             'municipality' => $request->municipality,

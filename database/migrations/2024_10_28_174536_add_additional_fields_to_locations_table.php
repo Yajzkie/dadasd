@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('locations', function (Blueprint $table) {
             $table->string('number_of_cots')->nullable();
-            $table->string('size_of_cots')->nullable();
             $table->string('activity_type')->nullable();
             $table->string('observer_category')->nullable();
         });
@@ -27,7 +26,6 @@ return new class extends Migration
         Schema::table('locations', function (Blueprint $table) {
             $table->dropColumn([
                 'number_of_cots',
-                'size_of_cots',
                 'activity_type',
                 'observer_category',
             ]);
