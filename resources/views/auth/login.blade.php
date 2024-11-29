@@ -24,7 +24,8 @@
         }
 
         .header p {
-            max-width: 50%;
+            max-height: 50%;
+            max-width: 70%;
             background-color: rgba(0, 0, 0, 0.5);
             color: #fff;
             padding: 15px;
@@ -38,7 +39,8 @@
             align-items: center;
             flex-direction: column;
             position: absolute;
-            top: 48%;
+            top: 50%;
+            max-height:50% ;
             transform: translateY(-100%);
         }
 
@@ -53,7 +55,27 @@
             color: #fff;
             padding: 10px;
             text-align: center;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 0;
         }
+
+
+    @media (max-width: 768px) {
+    
+        .header {
+            height: auto;
+        }
+
+        .login-container {
+            position: relative;
+            transform: translate(0, 0);
+            top: initial;
+            left: initial;
+        }
+
+    }
     </style>
 </head>
 <body style="background-color: #d4eafd;">
@@ -63,15 +85,10 @@
     <div class="carousel-inner">
         <!-- First Slide: Header and Login Section -->
         <div class="carousel-item active">
-            <div class="header text-center">
-                <h1>Welcome to COTS Tracker</h1>
-                <p>Your go-to resource for Commercial Off-The-Shelf (COTS) solutions. Explore 
-                    our comprehensive range of COTS products designed to streamline your operations, reduce costs, and enhance 
-                    efficiency. From software to hardware, our expert-curated selections meet
-                     diverse needs with proven reliability and performance. Get insights and make informed 
-                     decisions with our detailed reports available at the end of each product description. 
-                     Dive in and discover how COTS can transform your business today!</p>
-
+            <div class="header text-center mb-5">
+                <div>
+                    <h1 class="display-1">Welcome to COTS Tracker</h1>
+                </div>
                 <!-- Login Container -->
                 <div class="login-container">
                     <div class="bg-white shadow p-4 rounded">
@@ -110,59 +127,68 @@
                         </form>
                     </div>
                 </div>
+                <p>
+                The COTS Tracker Mobile Application is a fantastic method used to address the issue of Crown-of-Thorns
+                 Starfish (COTS) in the coral reef environment. Utilising geospatial mapping and/or GPS to capture and
+                  geo-reference particular locations of COTS sightings. It uses reports from its users and comes up with 
+                  a visual density map that helps identify areas that need to be addressed.</p>
             </div>
         </div>
 
         <!-- Second Slide: Content and Map Section -->
         <div class="carousel-item">
-    <div class="container my-5">
-        <h2 class="text-center mb-4">Most Dangerous Species</h2>
-        <div class="row g-3">
-            <div class="col-md-4">
-                <img src="{{ asset('images/cots1.jpg') }}" class="img-fluid rounded" alt="Species 1">
+            <div class="container my-5">
+                <h2 class="text-center mb-4">Most Dangerous Species</h2>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <img src="{{ asset('images/cots1.jpg') }}" class="img-fluid rounded" alt="Species 1">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="{{ asset('images/cots2.jpg') }}" class="img-fluid rounded" alt="Species 2">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="{{ asset('images/cots1.jpg') }}" class="img-fluid rounded" alt="Species 3">
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4">
-                <img src="{{ asset('images/cots2.jpg') }}" class="img-fluid rounded" alt="Species 2">
+
+            <div class="row my-5 d-flex justify-content-center align-items-center">
+                <div class="col-lg-4">
+                    <img src="{{ asset('images/maps.png') }}" class="img-fluid rounded" alt="Map of Southern Leyte">
+                </div>
+
+                <div class="col-lg-4">
+                    <p class="bg-info text-white p-3 rounded">
+                        Despite its beauty, Southern Leyte province in the Philippines has several hurdles
+                         when it comes to the marine environment issue. The area has been facing a major 
+                         problem with poaching and other unlawful activities against the best interest of 
+                         its aquatic ecosystem. Furthermore there has been a recent outbreak of the Crown-of-Thorns
+                          Starfish (COTS) which feeds on coral and greatly contributes to the deterioration of coral 
+                          reefs and further stress for the already struggling marine ecosystem. Measures to combat 
+                          these problems are important in maintaining the beautiful and rich marine wildlife of Southern 
+                          Leyte and its environment to benefit those who will come after us.</p>
+                </div>
             </div>
-            <div class="col-md-4">
-                <img src="{{ asset('images/cots1.jpg') }}" class="img-fluid rounded" alt="Species 3">
+
+            <!-- Contact Info Section -->
+            <div class="contact-info my-4 d-flex justify-content-center">
+                <div class="details d-flex align-items-start">
+                    <!-- Logos side by side -->
+                    <div class="img d-flex justify-content-start" style="gap: 10px;">
+                        <img src="{{ asset('images/logo1.jpg') }}" alt="Logo 1" class="mb-2" style="max-width: 80px;">
+                        <img src="{{ asset('images/logo3.jpg') }}" alt="Logo 2" class="mb-2" style="max-width: 80px;">
+                    </div>
+                    
+                    <!-- Contact Information -->
+                    <div class="info mt-3">
+                        <p><strong>Contact Details:</strong></p>
+                        <p>📞 <strong>0993023200445</strong></p>
+                        <p>✉️ <strong>dssdks@gmail.com</strong></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="row my-5 d-flex justify-content-center align-items-center">
-        <div class="col-lg-4">
-            <img src="{{ asset('images/maps.png') }}" class="img-fluid rounded" alt="Map of Southern Leyte">
-        </div>
-
-        <div class="col-lg-4">
-            <p class="bg-info text-white p-3 rounded">Southern Leyte, a stunning province in the Philippines, faces significant challenges related to its marine ecosystem. The area has 
-                been struggling with illegal fishing practices that threaten its rich biodiversity and disrupt the balance of its underwater habitats. Additionally, an outbreak of Crown-of-Thorns Starfish (COTS) 
-                has exacerbated the problem, as these invasive predators damage coral reefs and further strain the local marine environment. Efforts to address these issues are crucial for preserving Southern Leyte’s
-                unique marine life and ensuring the health of its ecosystems for future generations.</p>
-        </div>
-    </div>
-
-    <!-- Contact Info Section -->
-    <div class="contact-info my-4 d-flex justify-content-center">
-    <div class="details d-flex align-items-start">
-        <!-- Logos side by side -->
-        <div class="img d-flex justify-content-start" style="gap: 10px;">
-            <img src="{{ asset('images/logo1.jpg') }}" alt="Logo 1" class="mb-2" style="max-width: 80px;">
-            <img src="{{ asset('images/logo3.jpg') }}" alt="Logo 2" class="mb-2" style="max-width: 80px;">
-        </div>
-        
-        <!-- Contact Information -->
-        <div class="info mt-3">
-            <p><strong>Contact Details:</strong></p>
-            <p>📞 <strong>0993023200445</strong></p>
-            <p>✉️ <strong>dssdks@gmail.com</strong></p>
-        </div>
-    </div>
-</div>
-
-</div>
-
 
     <!-- Carousel Controls -->
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -174,6 +200,7 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
+
 
 
 <!-- Footer -->

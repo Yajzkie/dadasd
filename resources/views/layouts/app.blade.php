@@ -27,6 +27,14 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css')}}" />
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.74.0/dist/L.Control.Locate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.74.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 
     <!-- Helpers -->
     <script src="{{ asset('assets/vendor/js/helpers.js')}}"></script>
@@ -34,11 +42,9 @@
     <!-- Config -->
     <script src="{{ asset('assets/js/config.js')}}"></script>
 
-    <!-- Leaflet CSS & JS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.74.0/dist/L.Control.Locate.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.74.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
         body {
@@ -49,8 +55,8 @@
         .navbar {
             position: fixed;
             top: 0;
-            left: 150px;
-            right: 0;
+            right: 0%;
+            margin-right: 20px;
             z-index: 1000;
             background-color: #fff;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -74,45 +80,44 @@
         }
 
         .navbar-nav-right {
-            display: flex;
             align-items: center;
+            flex-basis: 100%;
         }
 
         .navbar-nav-right .nav-item {
             margin-left: 15px;
         }
 
-        /* Modal Style */
-        .modal-content {
-            padding: 20px;
+        .navbar-nav {
+            flex-wrap: wrap; 
         }
 
-        /* Inbox Dropdown */
-        .inbox-dropdown .dropdown-menu {
-            max-height: 300px;
-            overflow-y: auto;
+        .navbar {
+            padding: 1rem 1.5rem;
+        }
+
+        .navbar-toggler {
+            border-color: transparent;
         }
     </style>
 </head>
 <body>
-<nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme fixed-top" id="layout-navbar">
+<!-- Navbar -->
+<nav class="layout-navbar container-xxl navbar navbar-expand navbar-detached align-items-center bg-navbar-theme fixed-top" id="layout-navbar">
     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
             <i class="bx bx-menu bx-sm"></i>
         </a>
     </div>
-
-    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+    <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <li class="nav-item inbox-dropdown dropdown">
                 <a class="nav-link px-0" href="#" id="inboxDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-envelope" style="font-size: 1.5rem;"></i> <!-- Inbox Icon -->
-                    <span class="badge bg-danger"></span> <!-- Show count of new locations -->
+                    <i class="bi bi-envelope" style="font-size: 1.5rem; margin-right: 10px;"></i> 
+                    <span class="badge bg-danger"></span> 
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="inboxDropdown">
-                    <li><a class="dropdown-item" href="#">
-                        New location added in: 
-                    </a></li>
+                    <li><a class="dropdown-item" href="#">New location added in:</a></li>
                 </ul>
             </li>
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
@@ -124,28 +129,22 @@
     </div>
 </nav>
 
-    <div class="layout-wrapper layout-content-navbar">
-        <div class="layout-container">
-            @if(auth()->user()->role->role_name == 'admin')
-                @include('admin.menu')
-            @else
-                @include('user.menu')
-            @endif
+<!-- Page Content -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        @if(auth()->user()->role->role_name == 'admin')
+            @include('admin.menu')
+        @else
+            @include('user.menu')
+        @endif
 
-            <div class="layout-page">
-                <main class="py-4">
-                    @yield('content')
-                </main>
-            </div>
+        <div class="layout-page">
+            <main class="py-4">
+                @yield('content')
+            </main>
         </div>
     </div>
-
-    <!-- Bootstrap JS and Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</div>
 
 </body>
 </html>

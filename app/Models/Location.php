@@ -24,6 +24,7 @@ class Location extends Model
         'activity_type',
         'observer_category',
         'municipality',
+        'barangay',
         'date_of_sighting',
         'time_of_sighting',
         'photo',

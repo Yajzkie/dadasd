@@ -31,6 +31,9 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/index', [LocationController::class, 'dashboard'])->name('admin.index');
     Route::get('/admin/report', [LocationController::class, 'report'])->name('admin.report');
     Route::get('admin/report/export', [LocationController::class, 'export'])->name('admin.report.export');
+    // In routes/web.php
+    Route::get('/dashboard-data', [LocationController::class, 'getDashboardData'])->name('dashboard.data');
+
 
 
     // User Management Routes

@@ -92,26 +92,37 @@
                 <div class="content-wrapper">
                     <div id="map" style="height: 100%;"></div>
                     <!-- Consent Modal -->
-                        <div class="modal fade" id="consentModal" tabindex="-1" aria-labelledby="consentModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="consentModalLabel">Data Privacy Consent</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal fade" id="consentModal" tabindex="-1" aria-labelledby="consentModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="consentModalLabel">Data Privacy Consent</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="fs-5">
+                                        All of the information that the respondents will provide will be treated as confidential and will only be used for research purposes.
+                                        We are committed to protecting your personal information and respecting your privacy.
+                                        Any personal information provided will be treated with confidentiality.
+                                    </p> 
+                                    
+                                    <p class="text-muted">
+                                        By clicking <strong>"I Agree"</strong>, you consent to the collection and processing of your data for research and monitoring purposes, in accordance with applicable data privacy laws.
+                                    </p>
+                                    <div class="text-center my-3">
+                                        <img src="{{ asset('images/cots1.jpg') }}" class="img-fluid rounded" alt="Species 1">
                                     </div>
-                                    <div class="modal-body">
-                                        <p>
-                                            By clicking "I Agree," you consent to the collection and processing of your data for research and monitoring purposes, in accordance with applicable data privacy laws.
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-primary" id="agreeConsent">I Agree</button>
-                                    </div>
+                                    <p>
+                                        About the cots: detailed description goes here, explaining their significance and use in a clear manner.
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-primary" id="agreeConsent">I Agree</button>
                                 </div>
                             </div>
                         </div>
-
+                    </div>
 
                     <!-- Modal -->
                     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
@@ -119,12 +130,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <div>
-                <h5 class="modal-title" id="locationModalLabel">Data Privacy Consent</h5>
-                <p style="font-size: 0.9rem; margin-top: 8px;">
-                    All of the information that the respondents will provide will be treated as confidential and will only be used for research purposes.
-                    We are committed to protecting your personal information and respecting your privacy.
-                    Any personal information provided will be treated with confidentiality.
-                </p>
+                <h5 class="modal-title" id="locationModalLabel"></h5>
             </div>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -147,14 +153,25 @@
                 <div class="form-group">
                     <label for="municipality">Municipality Where COTS sighted (Munisipyo diin nakita ang COTS)</label>
                     <select class="form-control" id="municipality" name="municipality" required>
-                        @foreach($municipalities as $municipality)
-                            <option value="{{ $municipality->name }}">{{ $municipality->name }}</option>
-                        @endforeach
+                            <option value="Bontoc">Bontoc</option>
+                            <option value="Tomas Oppus">Tomas Oppus</option> 
+                            <option value="Sogod">Sogod</option>
+                            <option value="Malitbog">Malitbog</option>
+                            <option value="Liloan">Liloan</option>
+                            <option value="Libagon">Libagon</option>
+                            <option value="Padre burgos">Padre Burgos</option>
+                            <option value="San Francisco">San Francisco</option>
+                            <option value="Limasawa">Limasawa</option>
+                            <option value="Panaon">Panaon</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="barangay">Barangay:</label>
+                    <input type="text" class="form-control" id="barangay" name="barangay" required>
+                </div>
                 <div class="form-group d-flex align-items-center justify-content-between" style="margin-top: 15px;">
-                    <label class="me-3" style="min-width: 150px;">Size of COTS (kadak-on sa COTS)</label>
-                    <label class="me-3" style="min-width: 150px;">Number  of COTS (kadaghanon sa COTS)</label>
+                    <label class="me-3" style="min-width: 150px;">Size of COTS inside a <br>10 x 10m area(kadak-on sa COTS)</label>
+                    <label class="me-3" style="min-width: 150px;">Number  of COTS inside a <br>10 x 10m area(kadaghanon sa COTS)</label>
                 </div>
 
                 <!-- Add margin-top to space out the "Early Juvenile" field -->
@@ -165,32 +182,31 @@
 
                 <div class="form-group d-flex align-items-center justify-content-between">
                     <label for="juvenile" class="me-3" style="min-width: 150px;">6-15cm:</label>
-                    <input type="number" class="form-control" id="juvenile" name="juvenile" min="1"  placeholder="Enter number of COTS">
+                    <input type="number" class="form-control" id="juvenile" name="juvenile" min="0"  placeholder="Enter number of COTS">
                 </div>
                 <div class="form-group d-flex align-items-center justify-content-between">
                     <label for="sub_adult" class="me-3" style="min-width: 150px;">15-25cm:</label>
-                    <input type="number" class="form-control" id="sub_adult" name="sub_adult" min="1"  placeholder="Enter number of COTS">
+                    <input type="number" class="form-control" id="sub_adult" name="sub_adult" min="0"  placeholder="Enter number of COTS">
                 </div>
                 <div class="form-group d-flex align-items-center justify-content-between">
                     <label for="adult" class="me-3" style="min-width: 150px;">25-35cm:</label>
-                    <input type="number" class="form-control" id="adult" name="adult" min="1"  placeholder="Enter number of COTS">
+                    <input type="number" class="form-control" id="adult" name="adult" min="0"  placeholder="Enter number of COTS">
                 </div>
                 <div class="form-group d-flex align-items-center justify-content-between">
                     <label for="adult" class="me-3" style="min-width: 150px;">>35cm:</label>
-                    <input type="number" class="form-control" id="late_adult" name="late_adult" min="1"  placeholder="Enter number of COTS">
+                    <input type="number" class="form-control" id="late_adult" name="late_adult" min="0"  placeholder="Enter number of COTS">
                 </div>
-                <div class="form-group">
-                    <label>Number of COTS inside a 10 x 10m area</label>
-                    <input type="number" class="form-control" id="number_of_cots" name="number_of_cots" min="1"  placeholder="Enter number of COTS">
+                <div class="form-group d-flex align-items-center justify-content-between">
+                    <label for="adult" class="me-3" style="min-width: 150px;">Total Cots:</label>
+                    <input type="number" class="form-control" id="number_of_cots" name="number_of_cots" min="0" >
                 </div>
                 <div class="form-group">
                     <label for="activity_type">Type of Activity: (Tipo sa Aktibidad)</label>
                     <select class="form-control" id="activity_type" name="activity_type">
-                        <option value="fishing">Fishing</option>
-                        <option value="recreational diving">Recreational: Scuba Diving / Sonrkeling / Free Diving / Swimming</option>
-                        <option value="shore gleaning">Shore gleaning(nanginhas)</option>
-                        <option value="spear fishing">Spear fishing(namana)</option>
-                        <option value="researcher">Reseach</option>
+                        <option value="Fishing">Fishing: spearfishing / Gleaning</option>
+                        <option value="Recreational diving">Recreational: Scuba Diving / Snorkeling / Free Diving / Swimming</option>
+                        <option value="Research">research</option>
+                        <option value="Cots collection">COTS Collection</option>
                         <option value="other">Other</option>
                     </select>
                     <!-- Custom input for "Other" activity -->
@@ -199,12 +215,11 @@
                 <div class="form-group">
                     <label for="observer_category">Observer Category: (Kategoriya sa Obserbador)</label>
                     <select class="form-control" id="observer_category" name="observer_category">
-                        <option value="fisherfolks">Fisherfolks</option>
-                        <option value="barangay residents">Barangay Residents</option>
-                        <option value="local government">Local Government Unit (LGU)</option>
-                        <option value="advocacy groups">Advocacy Group (ex. dap ag boys)</option>
-                        <option value="independent researcher">Independent Researcher</option>
-                        <option value="independent researcher">SLSU Researcher</option>
+                        <option value="Fisherfolks">Fisherfolks</option>
+                        <option value="Barangay residents">Barangay Residents</option>
+                        <option value="Local government">Local Government Unit (LGU)</option>
+                        <option value="Advocacy groups">Advocacy Group (ex. Dap ag boys)</option>
+                        <option value="Researcher">Researcher</option>
                         <option value="other">Other</option>
                     </select>
                     <!-- Custom input for "Other" observer -->

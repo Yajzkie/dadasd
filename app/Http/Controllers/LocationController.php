@@ -85,4 +85,32 @@ class LocationController extends Controller
         return Excel::download(new LocationsExport($locations), $filename);
     }
 
+    // Inside DashboardController.php
+    public function getDashboardData()
+    {
+        // Get the sum of number_of_cots by municipality
+        $municipalityCots = Location::select('municipality', \DB::raw('sum(number_of_cots) as total_cots'))
+                                    ->groupBy('municipality')
+                                    ->get();
+
+        // Calculate the total number of cots
+        $totalCots = $municipalityCots->sum('total_cots');
+
+        // Prepare data for the chart
+        $municipalities = $municipalityCots->pluck('municipality');
+        $totalCotsArray = $municipalityCots->pluck('total_cots');
+
+        // Get the total number of users
+        $userCount = \App\Models\User::count();
+
+        // Return as JSON
+        return response()->json([
+            'userCount' => $userCount,
+            'totalCots' => $totalCots,
+            'municipalities' => $municipalities,
+            'totalCotsArray' => $totalCotsArray,
+        ]);
+    }
+
+
 }

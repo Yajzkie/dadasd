@@ -32,6 +32,7 @@ class UserLocationController extends Controller
             'activity_type' => 'nullable|string',
             'observer_category' => 'nullable|string',
             'municipality' => 'nullable|string',
+            'barangay' => 'required|string',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
             'date_of_sighting' => 'nullable|date',
             'time_of_sighting' => 'nullable|date_format:H:i',
@@ -62,6 +63,7 @@ class UserLocationController extends Controller
             'activity_type' => $request->activity_type,
             'observer_category' => $request->observer_category,
             'municipality' => $request->municipality,
+            'barangay' => $request->barangay,
             'date_of_sighting' => $request->date_of_sighting,
             'time_of_sighting' => $request->time_of_sighting,
             'photo' => $photoPath, // If photo exists, store its path
