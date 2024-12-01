@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 16, 2024 at 11:00 AM
+-- Generation Time: Nov 30, 2024 at 05:13 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -59,7 +59,9 @@ CREATE TABLE `failed_jobs` (
 CREATE TABLE `locations` (
   `id` bigint UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `date_of_sighting` date DEFAULT NULL,
+  `time_of_sighting` time DEFAULT NULL,
   `latitude` decimal(10,7) NOT NULL,
   `longitude` decimal(10,7) NOT NULL,
   `municipality` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -67,34 +69,37 @@ CREATE TABLE `locations` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `number_of_cots` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `size_of_cots` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `activity_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `observer_category` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `observer_category` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `early_juvenile` int DEFAULT NULL,
+  `juvenile` int DEFAULT NULL,
+  `sub_adult` int DEFAULT NULL,
+  `adult` int DEFAULT NULL,
+  `late_adult` int DEFAULT NULL,
+  `barangay` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `locations`
 --
 
-INSERT INTO `locations` (`id`, `name`, `description`, `latitude`, `longitude`, `municipality`, `created_at`, `updated_at`, `photo`, `number_of_cots`, `size_of_cots`, `activity_type`, `observer_category`) VALUES
-(2, 'gdfgd', 'dgdfg', '10.3169459', '124.9976349', 'liloan', '2024-10-26 11:29:47', '2024-10-26 11:29:47', 'photos/B0ImbL8RbfJhFWORhgsDqtqo1cgwTSfCrBZ3a5x5.png', '21-30', NULL, NULL, NULL),
-(3, 'vxcvxc', 'dfgdfgnmjlkkj', '10.3378871', '125.0027847', 'liloan', '2024-10-26 11:44:12', '2024-10-26 11:44:12', 'photos/9W7VzSDxQsLPA4nzGBDR0oISuuohwXZXCFIicbSq.png', '1-5', NULL, NULL, NULL),
-(4, 'Jehdjs', 'Isisnwhs', '10.3152571', '125.0765991', 'liloan', '2024-10-26 11:50:48', '2024-10-26 11:50:48', 'photos/bDzULeITkp7q7lC4nqnouzk3G3gdOqETKEfCuDFw.jpg', '6-10', NULL, NULL, NULL),
-(5, 'sdfsdf', 'fsdfsdf', '10.3902339', '124.8785019', 'liloan', '2024-10-26 13:00:39', '2024-10-26 13:00:39', 'photos/jMmnRJMYQqm6CCnRHmC0JaQ7SkW6Jx42oI6RPSFz.png', '11-20', NULL, NULL, NULL),
-(6, 'sdfsdf', 'fsdfsdf', '10.3524100', '124.9413300', 'bontoc', '2024-10-26 13:03:56', '2024-10-26 13:03:56', 'photos/BO7uEMZBuEOQINo4jV3FXWVlkdvBeBxtTOojUkOz.png', '31-50', NULL, NULL, NULL),
-(7, 'asdsad', 'fsdfsfsdf', '10.3453175', '125.0103378', 'tomas oppus', '2024-10-28 09:53:52', '2024-10-28 09:53:52', 'photos/1cm4hGFzNTDiqA8XT6hk8I8Sy56pHwNts55pWcfv.png', '11-20', 'medium', 'recreational_diving', 'fisherfolks'),
-(8, 'jay sabalo', 'werwewer', '10.3047859', '125.0288773', 'bontoc', '2024-10-28 10:12:51', '2024-10-28 10:12:51', 'photos/PLRt04djKfFXiNSSckBHK9irJNwJKVEnGYqzcbED.png', '11-20', 'large', 'recreational_diving', 'barangay_residents'),
-(9, 'Wrbqgrhg', 'Wfwfef', '10.2612086', '125.0288773', 'libagon', '2024-10-28 10:13:10', '2024-10-28 10:13:10', NULL, '1-5', 'small', 'fishing', 'fisherfolks'),
-(11, NULL, 'dasda', '10.3017458', '125.0048447', 'liloan', '2024-11-12 07:10:59', '2024-11-12 07:10:59', NULL, '1-5', 'small', 'fishing/namasol', 'fisherfolks'),
-(12, NULL, 'sdfsdfsdfsd', '10.1273992', '125.6962967', 'liloan', '2024-11-12 07:13:09', '2024-11-12 07:13:09', NULL, '6-10', 'small', 'fishing/namasol', 'fisherfolks'),
-(13, 'jay sasasasas', 'sasdas', '10.2757351', '124.9969482', 'liloan', '2024-11-14 00:18:30', '2024-11-14 00:18:30', NULL, '1-5', 'small', 'spear fishing', 'fisherfolks'),
-(14, NULL, 'sdsadas', '10.2885718', '125.0542831', 'sogod', '2024-11-14 06:56:18', '2024-11-14 06:56:18', NULL, '1-5', 'small', 'fishing/namasol', 'fisherfolks'),
-(15, NULL, 'dsfsdf', '10.2071510', '125.0127411', 'bontoc', '2024-11-14 06:56:24', '2024-11-14 06:56:24', NULL, '1-5', 'small', 'fishing/namasol', 'fisherfolks'),
-(16, NULL, 'Hshehesjs', '10.3463307', '125.0323105', 'libagon', '2024-11-14 07:49:29', '2024-11-14 07:49:29', NULL, '1-5', 'small', 'fishing/namasol', 'fisherfolks'),
-(17, NULL, 'Jeysjsydud', '10.2419516', '125.0566864', 'liloan', '2024-11-14 07:51:49', '2024-11-14 07:51:49', NULL, '6-10', 'small', 'fishing/namasol', 'fisherfolks'),
-(18, NULL, 'Jsjshs', '10.2554654', '125.0120544', 'libagon', '2024-11-14 08:40:34', '2024-11-14 08:40:34', NULL, '51_or_more', 'small', 'fishing/namasol', 'fisherfolks'),
-(19, NULL, 'Yhh', '10.3787521', '124.9832153', 'sogod', '2024-11-14 08:42:20', '2024-11-14 08:42:20', NULL, '20', 'small', 'fishing/namasol', 'fisherfolks'),
-(20, NULL, 'Nasdsd', '10.3337567', '124.9728709', 'liloan', '2024-11-14 18:32:56', '2024-11-14 18:32:56', 'photos/U7T3WY87mNIXFzmR4Sp5USTHodazQC1NJlQDFNXz.png', '5', 'small', 'other', 'fisherfolks');
+INSERT INTO `locations` (`id`, `name`, `description`, `date_of_sighting`, `time_of_sighting`, `latitude`, `longitude`, `municipality`, `created_at`, `updated_at`, `photo`, `number_of_cots`, `activity_type`, `observer_category`, `early_juvenile`, `juvenile`, `sub_adult`, `adult`, `late_adult`, `barangay`) VALUES
+(1, NULL, NULL, '2024-11-21', '16:41:00', '10.2324916', '125.0217548', 'liloan', '2024-11-28 00:37:30', '2024-11-28 00:37:30', NULL, '31', 'fishing', 'fisherfolks', 11, 7, NULL, 7, 6, ''),
+(2, NULL, NULL, '2024-11-27', '16:43:00', '10.3155948', '125.0025247', 'padre burgos', '2024-11-28 00:39:46', '2024-11-28 00:39:46', NULL, '36', 'fishing', 'fisherfolks', 9, 12, NULL, 11, 4, ''),
+(3, NULL, NULL, '2024-11-21', '16:47:00', '10.2047857', '125.0547208', 'sogod', '2024-11-28 00:43:22', '2024-11-28 00:43:22', NULL, '6', 'fishing', 'fisherfolks', 6, NULL, NULL, NULL, NULL, ''),
+(4, NULL, NULL, '2024-11-22', '16:46:00', '10.2804644', '125.0361774', 'bontoc', '2024-11-28 00:43:42', '2024-11-28 00:43:42', NULL, '45', 'fishing', 'independent researcher', 11, 17, 12, 5, NULL, ''),
+(5, NULL, NULL, '2024-11-23', '16:46:00', '10.2460058', '124.9956568', 'malitbog', '2024-11-28 00:44:01', '2024-11-28 00:44:01', NULL, '13', 'fishing', 'independent researcher', NULL, NULL, NULL, 13, NULL, ''),
+(6, NULL, NULL, '2024-11-28', '17:37:00', '10.2077141', '125.0395203', 'san francisco', '2024-11-29 02:38:21', '2024-11-29 02:38:21', 'photos/6749999c74163.jpg', '24', 'research', 'barangay residents', 5, 6, 9, NULL, 4, ''),
+(7, NULL, NULL, '2024-11-23', '15:38:00', '10.1689672', '125.0202942', 'limasawa', '2024-11-29 02:38:55', '2024-11-29 02:38:55', NULL, '69', 'fishing', 'barangay residents', NULL, NULL, NULL, 69, NULL, ''),
+(8, NULL, NULL, '2024-11-22', '06:55:00', '10.2021965', '125.0491342', 'bontoc', '2024-11-29 02:54:53', '2024-11-29 02:54:53', NULL, '20', 'fishing', 'fisherfolks', 13, NULL, NULL, 7, NULL, 'poblacion'),
+(9, NULL, NULL, '2024-11-29', '08:34:00', '10.2054615', '125.0065613', 'Panaon', '2024-11-29 08:35:17', '2024-11-29 08:35:17', 'photos/6749ed44987cc.jpg', '31', 'Research', 'Researcher', 8, 6, 4, 4, 9, 'Secret'),
+(10, NULL, NULL, '2024-11-12', '06:42:00', '10.1703189', '125.0724792', 'Bontoc', '2024-11-29 08:42:32', '2024-11-29 08:42:32', NULL, '1', 'Fishing', 'Fisherfolks', NULL, NULL, 1, NULL, NULL, 'Jdhd'),
+(11, NULL, NULL, '2024-11-21', '03:38:00', '10.1338206', '125.0422668', 'Bontoc', '2024-11-29 08:43:10', '2024-11-29 08:43:10', NULL, NULL, 'Fishing', 'Fisherfolks', NULL, NULL, NULL, NULL, NULL, 'Jdhd'),
+(12, NULL, NULL, '2024-11-25', '00:43:00', '10.1149357', '125.0610638', 'Bontoc', '2024-11-29 08:43:55', '2024-11-29 08:43:55', NULL, '2', 'Fishing', 'Fisherfolks', NULL, 2, NULL, NULL, NULL, 'Djsjs'),
+(13, NULL, NULL, '2024-11-12', '06:44:00', '10.1216536', '125.0628662', 'Bontoc', '2024-11-29 08:44:36', '2024-11-29 08:44:36', NULL, '2', 'Fishing', 'Fisherfolks', NULL, 2, NULL, NULL, NULL, 'Udjdie'),
+(14, NULL, NULL, '2024-11-29', '09:51:00', '10.1405799', '125.0354004', 'Bontoc', '2024-11-29 08:51:34', '2024-11-29 08:51:34', NULL, '10', 'Fishing', 'Fisherfolks', NULL, 10, NULL, NULL, NULL, 'Jzjzhzh'),
+(15, NULL, NULL, '2024-11-29', '00:52:00', '10.1175978', '125.0505066', 'Panaon', '2024-11-29 08:53:05', '2024-11-29 08:53:05', NULL, '9', 'Fishing', 'Fisherfolks', NULL, 9, NULL, NULL, NULL, 'Jsjsjs'),
+(16, NULL, NULL, '2024-11-22', '03:55:00', '10.1730223', '125.0079346', 'Panaon', '2024-11-29 08:55:24', '2024-11-29 08:55:24', NULL, '1', 'Fishing', 'Fisherfolks', NULL, NULL, 1, NULL, NULL, 'Nbg');
 
 -- --------------------------------------------------------
 
@@ -123,10 +128,27 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2024_08_27_040741_create_roles_table', 1),
 (9, '2024_08_27_042142_create_agency_table', 1),
 (10, '2024_08_28_165706_add_role_to_users_table', 1),
-(13, '2024_10_26_190306_create_user_locations_table', 2),
-(14, '2024_10_28_174536_add_additional_fields_to_locations_table', 3),
-(15, '2024_11_12_150859_alter_locations_table_allow_null_name', 4),
-(16, '2024_11_14_153250_add_municipality_to_locations_table', 5);
+(11, '2024_10_28_174536_add_additional_fields_to_locations_table', 1),
+(12, '2024_11_12_150859_alter_locations_table_allow_null_name', 1),
+(13, '2024_11_14_153250_add_municipality_to_locations_table', 1),
+(14, '2024_11_16_152532_add_date_and_time_of_sighting_to_locations', 1),
+(15, '2024_11_20_171032_create_municipality_table', 1),
+(16, '2024_11_26_100038_rename_size_of_cots', 1),
+(17, '2024_11_28_052715_add_size_locations', 1),
+(18, '2024_11_29_104852_add_baranggay_to_location', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `municipality`
+--
+
+CREATE TABLE `municipality` (
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -189,8 +211,8 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `role_name`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '2024-10-26 10:14:04', '2024-10-26 10:14:04'),
-(2, 'user', '2024-10-26 10:14:04', '2024-10-26 10:14:04');
+(1, 'admin', '2024-11-28 00:32:10', '2024-11-28 00:32:10'),
+(2, 'user', '2024-11-28 00:32:10', '2024-11-28 00:32:10');
 
 -- --------------------------------------------------------
 
@@ -215,10 +237,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role_id`) VALUES
-(1, 'Jay sabalo', 'yajzkie@gmail.com', '2024-10-26 10:15:20', '$2y$12$/J7A2zxqRy6TpvL8.0f14Oq.COVmWUsG646Y5RnWm7DVINM7RB15a', 'kBnTTy50BS', NULL, NULL, 1),
-(2, 'meryjie meking', 'meryjie@gmail.com', '2024-10-26 10:15:20', '$2y$12$HSpiAIsbcqqHhzRJnjX/POdVQ3DPWLcmKD60Yil.sSnUZcDtOb57G', 'r0fQxPT38P', NULL, NULL, 2),
-(3, 'administrator', 'administrator@gmail.com', NULL, '$2y$12$u6LGUvC26evR7TOXqduM.ONmrnnXpn6ROsfy7NRm1uH9iJTAPeGYq', NULL, '2024-10-26 10:29:38', '2024-10-26 10:29:38', 1),
-(4, 'user', 'user@gmail.com', NULL, '$2y$12$HYzXYwHcHQEFRn19.FOtvO3G4z5EjP/7z.3tpL3EFYc2a9H6aAaa6', NULL, '2024-10-26 10:31:35', '2024-10-26 10:31:35', 2);
+(1, 'Jay sabalo', 'yajzkie@gmail.com', '2024-11-28 00:33:08', '$2y$12$6dU4LlSA4Qj4m7HVEV/XD.Fcbzl7VvRfeUeqKjVBzsAdHqQqt2Wti', 'WgXhSA875d', NULL, NULL, 1),
+(2, 'meryjie meking', 'meryjie@gmail.com', '2024-11-28 00:33:08', '$2y$12$Hz1QxjlsD4M/8v856Z8qIOhPRHH0n6vmUUzT6zml7qHLdSUo1UFI6', 'YU5PwEAs5i', NULL, NULL, 2),
+(3, 'admin', 'administrator@gmail.com', '2024-11-28 00:33:58', '$2y$12$7GbKBlKPCwICAKI6I2CduekMRcV8uYvx9nPNqy3y1DNMMdOSKRfwC', 'S6qe3l6mIv', NULL, NULL, 1),
+(4, 'user', 'user@gmail.com', '2024-11-28 00:33:59', '$2y$12$ACcFl6gAkZskPs93IEpPmuL7hWawWYdlgIkXivrHhlSzku9LuXHlG', 'bQyjrXnzlP', NULL, NULL, 2);
 
 --
 -- Indexes for dumped tables
@@ -247,6 +269,12 @@ ALTER TABLE `locations`
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `municipality`
+--
+ALTER TABLE `municipality`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -304,13 +332,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `locations`
 --
 ALTER TABLE `locations`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `municipality`
+--
+ALTER TABLE `municipality`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
