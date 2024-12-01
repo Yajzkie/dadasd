@@ -64,6 +64,9 @@
         }
 
         #map {
+            height: 100%;
+            position: relative;
+            margin: 0 auto;
             width: 90%;
             height: 50%;
             margin-top: 0px;

@@ -7,7 +7,7 @@
     <div class="layout-container">
 
         <div class="content-wrapper">
-            <div id="map" style="height: 100%;"></div>
+            <div id="map" style="height: 100%; position: relative; margin: 0 auto; "></div>
         </div>
 
         <!-- Core JS -->
