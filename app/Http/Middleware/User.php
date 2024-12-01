@@ -19,7 +19,7 @@ class User
         if (Auth::check() && Auth::user()->role_id === 2) {
             return $next($request);
         }
-
-        return redirect('/login');
+        abort(403);
+        // return redirect('/login');
     }
 }
