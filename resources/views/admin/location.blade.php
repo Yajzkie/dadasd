@@ -58,7 +58,7 @@
             // Loop through locations and place markers
             @foreach($locations as $location)
                 var popupContent = `
-                    <div class="popup-content" style="width: 200px;">
+                    <div class="popup-content" style="width: 200px;">test
                         <h5 class="popup-title"> <strong>Name:</strong> {{ $location->name ?? '' }}</h5>
                         <p class="popup-description"><strong>Description:</strong> {{ $location->description }}</p>
                         <p><strong>Date of Sighting:</strong> {{ $location->date_of_sighting }}</p>
