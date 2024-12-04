@@ -63,11 +63,13 @@
                         <p class="popup-description"><strong>Description:</strong> {{ $location->description }}</p>
                         <p><strong>Date of Sighting:</strong> {{ $location->date_of_sighting }}</p>
                         <p><strong>Time of Sighting:</strong> {{ $location->time_of_sighting }}</p>
+                        <p><strong>Municipality:</strong> {{ $location->municipality }}</p>
                         <p><strong>Number of COTS:</strong> {{ $location->number_of_cots ?? 'N/A' }}</p>
-                        <p><strong>Early juvenile:</strong> {{ $location->early_juvenile ?? 'N/A' }}</p>
-                        <p><strong>Juvenile:</strong> {{ $location->juvenile ?? 'N/A' }}</p>
-                        <p><strong>Sub Adult:</strong> {{ $location->sub_adult ?? 'N/A' }}</p>
-                        <p><strong>Adult:</strong> {{ $location->adult ?? 'N/A' }}</p>
+                        <p><strong>1-5cm:</strong> {{ $location->early_juvenile ?? 'N/A' }}</p>
+                        <p><strong>6-15cm:</strong> {{ $location->juvenile ?? 'N/A' }}</p>
+                        <p><strong>16-25cm:</strong> {{ $location->sub_adult ?? 'N/A' }}</p>
+                        <p><strong>26-35cm:</strong> {{ $location->adult ?? 'N/A' }}</p>
+                        <p><strong>>35cm:</strong> {{ $location->late_adult ?? 'N/A' }}</p>
                         <p><strong>Activity Type:</strong> {{ $location->activity_type ?? 'N/A' }}</p>
                         <p><strong>Observer Category:</strong> {{ $location->observer_category ?? 'N/A' }}</p>
                         <small class="text-muted">Saved on: {{ \Carbon\Carbon::parse($location->created_at)->format('F j, Y, g:i a') }}</small>

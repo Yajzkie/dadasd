@@ -29,11 +29,13 @@ class LocationsExport implements FromCollection, WithHeadings, ShouldAutoSize, W
                 'Name' => $location->name,
                 'Description' => $location->description,
                 'Municipality' => $location->municipality,
+                'barangay' => $location->barangay,
                 'Number of Cots' => $location->number_of_cots,
                 'early_juvenile' => $location->early_juvenile,
                 'juvenile' => $location->juvenile,
                 'sub_adult' => $location->sub_adult,
                 'adult' => $location->adult,
+                'late_adult' => $location->late_adult,
                 'Date of Sighting' => $location->date_of_sighting, // Add this field
                 'Time of Sighting' => $location->time_of_sighting, // Add this field
                 'Latitude' => $location->latitude, // Add this field
@@ -51,11 +53,13 @@ class LocationsExport implements FromCollection, WithHeadings, ShouldAutoSize, W
             'Name',
             'Description',
             'Municipality',
+            'Barangay',
             'Number of Cots',
-            'early_juvenile',
-            'juvenile',
-            'sub_adult',
-            'adult',
+            '1-5cm',
+            '6-15cm',
+            '16-25cm',
+            '26-35cm',
+            '>35cm',
             'Date of Sighting',
             'Time of Sighting',
             'Latitude',
@@ -68,22 +72,22 @@ class LocationsExport implements FromCollection, WithHeadings, ShouldAutoSize, W
     public function styles(Worksheet $sheet)
     {
         // Apply bold styling to the header row
-        $sheet->getStyle('A1:N1')->getFont()->setBold(true)->setSize(12);
-        $sheet->getStyle('A1:N1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:P1')->getFont()->setBold(true)->setSize(12);
+        $sheet->getStyle('A1:P1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         
         // Apply background color to header row
-        $sheet->getStyle('A1:N1')->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(Color::COLOR_YELLOW);
+        $sheet->getStyle('A1:P1')->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setARGB(Color::COLOR_YELLOW);
 
         // Add borders to all cells containing data
-        $sheet->getStyle('A2:N' . (count($this->locations) + 1))
+        $sheet->getStyle('A2:P' . (count($this->locations) + 1))
             ->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
 
         // Set alignment for all data cells
-        $sheet->getStyle('A2:N' . (count($this->locations) + 1))
+        $sheet->getStyle('A2:P' . (count($this->locations) + 1))
             ->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
         // Adjust column width for better visibility
-        foreach (range('A', 'N') as $column) {
+        foreach (range('A', 'P') as $column) {
             $sheet->getColumnDimension($column)->setAutoSize(true);
         }
 

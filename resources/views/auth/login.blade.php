@@ -50,16 +50,6 @@
             margin-bottom: 20px;
         }
 
-        .footer {
-            background-color: #555;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-            margin-top: 0;
-        }
 
 
     @media (max-width: 768px) {
@@ -78,7 +68,7 @@
     }
     </style>
 </head>
-<body style="background-color: #d4eafd;">
+<body>
 
 
 <div id="carouselExample" class="carousel slide">
@@ -137,58 +127,60 @@
 
         <!-- Second Slide: Content and Map Section -->
         <div class="carousel-item">
-            <div class="container my-5">
-                <h2 class="text-center mb-4">Most Dangerous Species</h2>
-                <div class="row g-3">
-                    <div class="col-md-4">
-                        <img src="{{ asset('images/cots1.jpg') }}" class="img-fluid rounded" alt="Species 1">
-                    </div>
-                    <div class="col-md-4">
-                        <img src="{{ asset('images/cots2.jpg') }}" class="img-fluid rounded" alt="Species 2">
-                    </div>
-                    <div class="col-md-4">
-                        <img src="{{ asset('images/cots1.jpg') }}" class="img-fluid rounded" alt="Species 3">
-                    </div>
-                </div>
+    <div class="container my-5">
+        <!-- Section Title -->
+        <h2 class="text-center mb-4 fw-bold text-primary">Most Dangerous Species</h2>
+        <div class="row g-4 justify-content-center">
+            <!-- Species Images -->
+            <div class="col-md-4">
+                <img src="{{ asset('images/img1.jpg') }}" class="img-fluid rounded shadow-sm" alt="Species 1">
             </div>
-
-            <div class="row my-5 d-flex justify-content-center align-items-center">
-                <div class="col-lg-4">
-                    <img src="{{ asset('images/maps.png') }}" class="img-fluid rounded" alt="Map of Southern Leyte">
-                </div>
-
-                <div class="col-lg-4">
-                    <p class="bg-info text-white p-3 rounded">
-                        Despite its beauty, Southern Leyte province in the Philippines has several hurdles
-                         when it comes to the marine environment issue. The area has been facing a major 
-                         problem with poaching and other unlawful activities against the best interest of 
-                         its aquatic ecosystem. Furthermore there has been a recent outbreak of the Crown-of-Thorns
-                          Starfish (COTS) which feeds on coral and greatly contributes to the deterioration of coral 
-                          reefs and further stress for the already struggling marine ecosystem. Measures to combat 
-                          these problems are important in maintaining the beautiful and rich marine wildlife of Southern 
-                          Leyte and its environment to benefit those who will come after us.</p>
-                </div>
+            <div class="col-md-4">
+                <img src="{{ asset('images/img2.jpg') }}" class="img-fluid rounded shadow-sm" alt="Species 2">
             </div>
-
-            <!-- Contact Info Section -->
-            <div class="contact-info my-4 d-flex justify-content-center">
-                <div class="details d-flex align-items-start">
-                    <!-- Logos side by side -->
-                    <div class="img d-flex justify-content-start" style="gap: 10px;">
-                        <img src="{{ asset('images/logo1.jpg') }}" alt="Logo 1" class="mb-2" style="max-width: 80px;">
-                        <img src="{{ asset('images/logo3.jpg') }}" alt="Logo 2" class="mb-2" style="max-width: 80px;">
-                    </div>
-                    
-                    <!-- Contact Information -->
-                    <div class="info mt-3">
-                        <p><strong>Contact Details:</strong></p>
-                        <p>📞 <strong>0993023200445</strong></p>
-                        <p>✉️ <strong>dssdks@gmail.com</strong></p>
-                    </div>
-                </div>
+            <div class="col-md-4">
+                <img src="{{ asset('images/img3.jpg') }}" class="img-fluid rounded shadow-sm" alt="Species 3">
             </div>
         </div>
     </div>
+
+    <!-- Map and Description Section -->
+    <div class="row my-5 d-flex justify-content-center align-items-center">
+        <!-- Map -->
+        <div class="col-lg-4 text-center">
+            <img src="{{ asset('images/maps.png') }}" class="img-fluid rounded shadow-sm" alt="Map of Southern Leyte">
+        </div>
+
+        <!-- Description -->
+        <div class="col-lg-6">
+            <p class="bg-info text-white p-4 rounded shadow-sm">
+            The Southern Leyte province in the Philippines is renowned for its abundant marine resources, with its coastal waters hosting vibrant coral reefs and a rich diversity of fish species. These ecosystems not only provide essential services such as fisheries and coastal protection but also contribute to the cultural and economic well-being of the local communities. However, these ecosystems are under significant threat from recurring outbreaks of Crown-of-Thorns Seastar (COTS).
+COTS, in large numbers, are voracious coral predators that can devastate coral reef ecosystems if left unchecked. The resulting loss of coral cover diminishes biodiversity and could disrupt the balance of marine life and compromise the resilience of these ecosystems to other stressors, such as climate change and pollution. This could significantly affect not only the health of marine habitats but also the livelihoods of communities that depend on this resource for food and tourism opportunities.
+To address this critical issue, the COTS Tracker Mobile Application offers a cutting-edge solution. By leveraging geospatial mapping and GPS technology, the app enables users to document and geo-reference specific COTS sightings. These user-submitted reports are aggregated into visual density maps, allowing conservation practitioners and local authorities to identify areas that require urgent actions or interventions.
+The COTS Tracker is an invaluable tool for conserving Southern Leyte’s marine ecosystems. By providing actionable data, enhancing response efforts, and facilitating community involvement, it plays a key role in safeguarding biodiversity and ensuring its lasting benefits for future generations.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="contact-info my-4">
+    <div class="details d-flex justify-content-center align-items-center">
+        <!-- Logos -->
+        <div class="d-flex flex-row align-items-center me-4" style="gap: 20px;">
+            <img src="{{ asset('images/logo1.png') }}" alt="Logo 1" class="img-fluid shadow-sm" style="max-width: 80px;">
+            <img src="{{ asset('images/logo3.png') }}" alt="Logo 2" class="img-fluid shadow-sm" style="max-width: 80px;">
+        </div>
+
+        <!-- Contact Information -->
+        <div class="info text-start">
+            <p class="mb-1"><strong>Contact Details:</strong></p>
+            <p class="mb-0">✉️ <a href="mailto:ries_bt@southernleytestateu.edu.ph" class="text-decoration-none text-primary">ries_bt@southernleytestateu.edu.ph</a></p>
+        </div>
+    </div>
+</div>
+
+</div>
+
 
     <!-- Carousel Controls -->
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -199,13 +191,6 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
-</div>
-
-
-
-<!-- Footer -->
-<div class="footer">
-    <p>ALL RIGHTS RESERVED 2024</p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
