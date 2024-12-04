@@ -90,10 +90,9 @@
 <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
                 <div class="content-wrapper">
-                    <div id="map" style="height: 100%;"></div>
-                    <!-- Consent Modal -->
-                    <div class="modal fade" id="consentModal" tabindex="-1" aria-labelledby="consentModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
+                 <div id="map" style="height: 100%; position: relative; margin: 0 auto; "></div>
+                 <div class="modal fade" id="consentModal" tabindex="-1" aria-labelledby="consentModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="consentModalLabel">Data Privacy Consent</h5>
