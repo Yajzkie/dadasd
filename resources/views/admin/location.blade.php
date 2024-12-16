@@ -21,74 +21,82 @@
 
         <!-- Leaflet map script -->
         <script>
-            var map = L.map('map').setView([10.306812602471465, 125.00810623168947], 12);
+    var map = L.map('map').setView([10.306812602471465, 125.00810623168947], 12);
 
-            var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            });
-            osm.addTo(map);
+    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    osm.addTo(map);
 
-            // Locate control for centering the map on the user's location
-            L.control.locate({
-                setView: true,
-                follow: true,
-                keepCurrentZoomLevel: true
-            }).addTo(map);
+    // Locate control for centering the map on the user's location
+    L.control.locate({
+        setView: true,
+        follow: true,
+        keepCurrentZoomLevel: true
+    }).addTo(map);
 
-            // Function to remove marker
-            function removeMarker(marker, id) {
-                var isConfirmed = confirm("Are you sure you want to delete this location?");
-                if (isConfirmed) {
-                    map.removeLayer(marker);
-                    $.ajax({
-                        url: '/locations/' + id,
-                        type: 'DELETE',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            console.log('Location deleted');
-                        }
-                    });
-                } else {
-                    console.log('Deletion canceled');
+    // Function to remove marker
+    function removeMarker(marker, id) {
+        var isConfirmed = confirm("Are you sure you want to delete this location?");
+        if (isConfirmed) {
+            map.removeLayer(marker);
+            $.ajax({
+                url: '/locations/' + id,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    console.log('Location deleted');
                 }
-            }
+            });
+        } else {
+            console.log('Deletion canceled');
+        }
+    }
 
-            // Loop through locations and place markers
-            @foreach($locations as $location)
-                var popupContent = `
-                    <div class="popup-content" style="width: 200px;">test
-                        <h5 class="popup-title"> <strong>Name:</strong> {{ $location->name ?? '' }}</h5>
-                        <p class="popup-description"><strong>Description:</strong> {{ $location->description }}</p>
-                        <p><strong>Date of Sighting:</strong> {{ $location->date_of_sighting }}</p>
-                        <p><strong>Time of Sighting:</strong> {{ $location->time_of_sighting }}</p>
-                        <p><strong>Municipality:</strong> {{ $location->municipality }}</p>
-                        <p><strong>Number of COTS:</strong> {{ $location->number_of_cots ?? 'N/A' }}</p>
-                        <p><strong>1-5cm:</strong> {{ $location->early_juvenile ?? 'N/A' }}</p>
-                        <p><strong>6-15cm:</strong> {{ $location->juvenile ?? 'N/A' }}</p>
-                        <p><strong>16-25cm:</strong> {{ $location->sub_adult ?? 'N/A' }}</p>
-                        <p><strong>26-35cm:</strong> {{ $location->adult ?? 'N/A' }}</p>
-                        <p><strong>>35cm:</strong> {{ $location->late_adult ?? 'N/A' }}</p>
-                        <p><strong>Activity Type:</strong> {{ $location->activity_type ?? 'N/A' }}</p>
-                        <p><strong>Observer Category:</strong> {{ $location->observer_category ?? 'N/A' }}</p>
-                        <small class="text-muted">Saved on: {{ \Carbon\Carbon::parse($location->created_at)->format('F j, Y, g:i a') }}</small>
-                        @if($location->photo)
-                            <img src="{{ asset('storage/' . $location->photo) }}" alt="{{ $location->name }}" style="width:100%; height:auto;" class="img-thumbnail">
-                        @endif
-                        <div class="text-end mt-2">
-                            <button class="btn btn-danger btn-sm" onclick="removeMarker(marker{{ $location->id }}, {{ $location->id }})">
-                                <i class="bx bx-trash"></i> Delete
-                            </button>
-                        </div>
+    // Loop through locations and place markers
+    @foreach($locations as $location)
+        var popupContent = `
+            <div class="popup-content" style="width: 250px;">
+                <h5 class="popup-title"> <strong>Name:</strong> {{ $location->name ?? '' }}</h5>
+                <p class="popup-description"><strong>Description:</strong> {{ $location->description }}</p>
+                <p><strong>Date of Sighting:</strong> {{ $location->date_of_sighting }}</p>
+                <p><strong>Time of Sighting:</strong> {{ $location->time_of_sighting }}</p>
+                <p><strong>Municipality:</strong> {{ $location->municipality }}</p>
+                <p><strong>Number of COTS:</strong> {{ $location->number_of_cots ?? 'N/A' }}</p>
+                <p><strong>1-5cm:</strong> {{ $location->early_juvenile ?? 'N/A' }}</p>
+                <p><strong>6-15cm:</strong> {{ $location->juvenile ?? 'N/A' }}</p>
+                <p><strong>16-25cm:</strong> {{ $location->sub_adult ?? 'N/A' }}</p>
+                <p><strong>26-35cm:</strong> {{ $location->adult ?? 'N/A' }}</p>
+                <p><strong>>35cm:</strong> {{ $location->late_adult ?? 'N/A' }}</p>
+                <p><strong>Activity Type:</strong> {{ $location->activity_type ?? 'N/A' }}</p>
+                <p><strong>Observer Category:</strong> {{ $location->observer_category ?? 'N/A' }}</p>
+                <small class="text-muted">Saved on: {{ \Carbon\Carbon::parse($location->created_at)->format('F j, Y, g:i a') }}</small>
+
+                @if($location->photo)
+                    @php
+                        $photos = json_decode($location->photo); // Decode the JSON array of photo paths
+                    @endphp
+                    <div class="image-collage" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; margin-top: 10px;">
+                        @foreach($photos as $photo)
+                            <img src="{{ asset('storage/' . $photo) }}" alt="{{ $location->name }}" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover;">
+                        @endforeach
                     </div>
-                `;
+                @endif
 
-                var marker{{ $location->id }} = L.marker([{{ $location->latitude }}, {{ $location->longitude }}]).addTo(map)
-                    .bindPopup(popupContent);
-            @endforeach
+                <div class="text-end mt-2">
+                    <button class="btn btn-danger btn-sm" onclick="removeMarker(marker{{ $location->id }}, {{ $location->id }})">
+                        <i class="bx bx-trash"></i> Delete
+                    </button>
+                </div>
+            </div>
+        `;
 
-        </script>
+        var marker{{ $location->id }} = L.marker([{{ $location->latitude }}, {{ $location->longitude }}]).addTo(map)
+            .bindPopup(popupContent);
+    @endforeach
+</script>
 
         <!-- Vendors JS -->
         <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>

@@ -15,9 +15,10 @@ class UserLocationController extends Controller
         $municipalities = Municipality::all();  // Retrieve all municipalities
         return view('user.index', compact('locations', 'municipalities'));  // Pass municipalities to the view
     }
+
     public function store(Request $request)
     {
-        // Validate the request
+        // Validate the request for multiple photos
         $request->validate([
             'name' => 'nullable|string',
             'description' => 'nullable|string',
@@ -33,19 +34,22 @@ class UserLocationController extends Controller
             'observer_category' => 'nullable|string',
             'municipality' => 'nullable|string',
             'barangay' => 'required|string',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'photo.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240', // Handle multiple images
             'date_of_sighting' => 'nullable|date',
             'time_of_sighting' => 'nullable|date_format:H:i',
         ]);
     
-        // Handle the photo upload
-        $photoPath = null;
+        // Handle multiple photo uploads
+        $photoPaths = [];
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->storeAs(
-                'photos', 
-                uniqid() . '.' . $request->file('photo')->getClientOriginalExtension(), 
-                'public'
-            );
+            foreach ($request->file('photo') as $photo) {
+                $photoPath = $photo->storeAs(
+                    'photos', 
+                    uniqid() . '.' . $photo->getClientOriginalExtension(), 
+                    'public'
+                );
+                $photoPaths[] = $photoPath; // Add each photo path to the array
+            }
         }
     
         // Create a new location using the request data
@@ -66,13 +70,12 @@ class UserLocationController extends Controller
             'barangay' => $request->barangay,
             'date_of_sighting' => $request->date_of_sighting,
             'time_of_sighting' => $request->time_of_sighting,
-            'photo' => $photoPath, // If photo exists, store its path
+            'photo' => json_encode($photoPaths), // Store the array of photo paths as a JSON string
         ]);
     
         // Redirect with a success message
         return redirect()->route('user.index')->with('success', 'Location saved successfully.');
     }
-    
 
     public function destroy($id)
     {

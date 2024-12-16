@@ -47,7 +47,6 @@
                     <th style="width: 5%; color: white;">Number of Cots</th>
                     <th style="width: 5%; color: white;">Date of COTS Sighted</th>
                     <th style="width: 5%; color: white;">Time of COTS Sighted</th>
-                    <th style="width: 10%; color: white;">Photo</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,13 +58,6 @@
                         <td>{{ $location->number_of_cots }}</td>
                         <td>{{ $location->date_of_sighting}}</td>
                         <td>{{ $location->time_of_sighting}}</td>
-                        <td>
-                            @if($location->photo)
-                                <img src="{{ asset('storage/' . $location->photo) }}" alt="Location Photo" class="img-fluid rounded" style="max-width: 70px;">
-                            @else
-                                <span class="text-muted">No photo</span>
-                            @endif
-                        </td>
                     </tr>
                 @endforeach
             </tbody>

@@ -108,11 +108,20 @@
                                     <p class="text-muted">
                                         By clicking <strong>"I Agree"</strong>, you consent to the collection and processing of your data for research and monitoring purposes, in accordance with applicable data privacy laws.
                                     </p>
-                                    <div class="text-center my-3">
-                                        <img src="{{ asset('images/cots1.jpg') }}" class="img-fluid rounded" alt="Species 1">
+                                    <div class="row g-2 my-3">
+                                        <div class="col-4">
+                                            <img src="{{ asset('images/img1.jpg') }}" class="img-fluid rounded" alt="Species 1">
+                                        </div>
+                                        <div class="col-4">
+                                            <img src="{{ asset('images/img2.jpg') }}" class="img-fluid rounded" alt="Species 2">
+                                        </div>
+                                        <div class="col-4">
+                                            <img src="{{ asset('images/img3.jpg') }}" class="img-fluid rounded" alt="Species 3">
+                                        </div>
                                     </div>
+
                                     <p>
-                                        About the cots: detailed description goes here, explaining their significance and use in a clear manner.
+                                      The Crown-of-Thorns Starfish (COTS) or locally known as Dap-ag is a marine species known for its significant impact on coral reefs. While it is a natural part of the ecosystem, during population outbreaks, COTS can devastate coral reefs by feeding on coral polyps, leading to extensive coral degradation. This species poses a major threat to coral ecosystems, especially in tropical and subtropical regions, and is considered one of the key factors in coral reef decline. Effective management and research are essential to mitigate the damage caused by COTS outbreaks and protect vital marine biodiversity.
                                     </p>
                                 </div>
                                 <div class="modal-footer">
@@ -152,6 +161,7 @@
                 <div class="form-group">
                     <label for="municipality">Municipality Where COTS sighted (Munisipyo diin nakita ang COTS)</label>
                     <select class="form-control" id="municipality" name="municipality" required>
+                            <option value="">Select Municipality</option>
                             <option value="Bontoc">Bontoc</option>
                             <option value="Tomas Oppus">Tomas Oppus</option> 
                             <option value="Sogod">Sogod</option>
@@ -201,10 +211,11 @@
                 </div>
                 <div class="form-group">
                     <label for="activity_type">Type of Activity: (Tipo sa Aktibidad)</label>
-                    <select class="form-control" id="activity_type" name="activity_type">
+                    <select class="form-control" id="activity_type" name="activity_type" required>
+                        <option value="">Select Activity</option>
                         <option value="Fishing">Fishing: spearfishing / Gleaning</option>
                         <option value="Recreational diving">Recreational: Scuba Diving / Snorkeling / Free Diving / Swimming</option>
-                        <option value="Research">research</option>
+                        <option value="Research">Research</option>
                         <option value="Cots collection">COTS Collection</option>
                         <option value="other">Other</option>
                     </select>
@@ -213,11 +224,12 @@
                 </div>
                 <div class="form-group">
                     <label for="observer_category">Observer Category: (Kategoriya sa Obserbador)</label>
-                    <select class="form-control" id="observer_category" name="observer_category">
+                    <select class="form-control" id="observer_category" name="observer_category" required>
+                        <option value="">Select Observer Category</option>
                         <option value="Fisherfolks">Fisherfolks</option>
                         <option value="Barangay residents">Barangay Residents</option>
                         <option value="Local government">Local Government Unit (LGU)</option>
-                        <option value="Advocacy groups">Advocacy Group (ex. Dap ag boys)</option>
+                        <option value="Advocacy groups">Advocacy Group (ex. Dap-ag Boys)</option>
                         <option value="Researcher">Researcher</option>
                         <option value="other">Other</option>
                     </select>
@@ -233,9 +245,11 @@
                     <input type="number" step="any" class="form-control" id="longitude" name="longitude" required>
                 </div>
                 <div class="form-group">
-                    <label for="photo">Photo: (Litrato)</label>
-                    <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+                    <label for="photo">Photos: (Litrato)</label>
+                    <input type="file" class="form-control" id="photo" name="photo[]" accept="image/*" multiple>
+                    <div id="photo-previews" class="mt-3"></div> <!-- Previews for the selected images -->
                 </div>
+
                 <div class="form-group">
                     <label for="description">Additional Comments or Observations: (Dugang nga mga Komentaryo o Observasyon)</label>
                     <textarea class="form-control" id="description" name="description"></textarea>
@@ -421,6 +435,29 @@ document.querySelector('.btn-secondary[data-bs-dismiss="modal"]').addEventListen
             observerSelect.value = customObserverInput.value; // Override the value with the custom input
         }
     });
+
+        document.getElementById('photo').addEventListener('change', function(event) {
+        var fileList = event.target.files;
+        var previewContainer = document.getElementById('photo-previews');
+        previewContainer.innerHTML = ''; // Clear previous previews
+
+        // Loop through the selected files
+        for (var i = 0; i < fileList.length; i++) {
+            var file = fileList[i];
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('img-fluid', 'rounded', 'm-2');
+                img.style.maxWidth = '150px';
+                previewContainer.appendChild(img);
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
+
 </script>
 <script>
     // Function to update the total of COTS
