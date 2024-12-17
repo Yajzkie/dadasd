@@ -117,11 +117,6 @@
                         </form>
                     </div>
                 </div>
-                <p>
-                The COTS Tracker Mobile Application is a fantastic method used to address the issue of Crown-of-Thorns
-                 Starfish (COTS) in the coral reef environment. Utilising geospatial mapping and/or GPS to capture and
-                  geo-reference particular locations of COTS sightings. It uses reports from its users and comes up with 
-                  a visual density map that helps identify areas that need to be addressed.</p>
             </div>
         </div>
 

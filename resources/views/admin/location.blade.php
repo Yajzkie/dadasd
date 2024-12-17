@@ -74,16 +74,23 @@
                 <p><strong>Observer Category:</strong> {{ $location->observer_category ?? 'N/A' }}</p>
                 <small class="text-muted">Saved on: {{ \Carbon\Carbon::parse($location->created_at)->format('F j, Y, g:i a') }}</small>
 
-                @if($location->photo)
-                    @php
-                        $photos = json_decode($location->photo); // Decode the JSON array of photo paths
-                    @endphp
-                    <div class="image-collage" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; margin-top: 10px;">
-                        @foreach($photos as $photo)
-                            <img src="{{ asset('storage/' . $photo) }}" alt="{{ $location->name }}" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover;">
-                        @endforeach
-                    </div>
-                @endif
+                    @if($location->photo)
+                        @php
+                            // Decode the JSON array safely
+                            $photos = json_decode($location->photo, true); // true returns an associative array
+                        @endphp
+                        @if(is_array($photos) && count($photos) > 0)
+                            <div class="image-collage" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; margin-top: 10px;">
+                                @foreach($photos as $photo)
+                                    <img src="{{ asset('storage/' . $photo) }}" alt="{{ $location->name }}" loading="lazy" style="width: 100%; height: 150px; border-radius: 8px; object-fit: cover;">
+                                @endforeach
+                            </div>
+                        @else
+                            <p>No valid photos available.</p>
+                        @endif
+                    @else
+                        <p>No photos uploaded for this location.</p>
+                    @endif
 
                 <div class="text-end mt-2">
                     <button class="btn btn-danger btn-sm" onclick="removeMarker(marker{{ $location->id }}, {{ $location->id }})">
