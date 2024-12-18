@@ -129,40 +129,6 @@ if (municipalities.length === totalCotsArray.length && municipalities.length > 0
 }
 
 </script>
-<script>
-    // Function to fetch updated dashboard data
-    function fetchDashboardData() {
-        $.ajax({
-            url: '{{ route('dashboard.data') }}',
-            method: 'GET',
-            success: function(response) {
-                console.log(response); // For debugging purposes
-
-                // Update user count
-                $('#userCount').text(response.userCount + ' users');
-                
-                // Update total cots
-                $('#totalCots').text(response.totalCots + ' cots');
-                
-                // Update the pie chart with new data
-                chartPie.updateOptions({
-                    series: response.totalCotsArray,
-                    labels: response.municipalities
-                });
-            },
-            error: function(error) {
-                console.error('Error fetching data:', error);
-            }
-        });
-    }
-
-    // Initial data fetch on page load
-    fetchDashboardData();
-
-    // Set an interval to auto-update the data every 30 seconds (adjust as needed)
-    setInterval(fetchDashboardData, 5000); // 3 seconds
-</script>
-
 
 
 <script src="{{ asset('assets/js/main.js') }}"></script>

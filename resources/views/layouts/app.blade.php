@@ -43,8 +43,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
     <!-- Leaflet Awesome Markers -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.js"></script>    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.css" />
+ 
 
 
     <!-- Helpers -->
@@ -56,6 +56,7 @@
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <style>
         body {
@@ -119,11 +120,11 @@
 <!-- Navbar -->
 <nav class="layout-navbar container-xxl navbar navbar-expand navbar-detached align-items-center bg-navbar-theme fixed-top" id="layout-navbar">
     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-            <i class="bx bx-menu bx-sm"></i>
-        </a>
+        <i class="bx bx-menu bx-sm"></i>
     </div>
-    <div class="collapse navbar-collapse" id="navbarContent">
+    
+    <!-- Collapsible Navbar Content -->
+    <div class="collapse navbar-collapse" id="navbarContentPage1">
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <li class="nav-item inbox-dropdown dropdown">
                 <a class="nav-link px-0" href="#" id="inboxDropdown" data-bs-toggle="dropdown" aria-expanded="false">
