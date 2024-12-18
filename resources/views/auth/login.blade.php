@@ -50,8 +50,6 @@
             margin-bottom: 20px;
         }
 
-
-
     @media (max-width: 768px) {
     
         .header {
@@ -75,7 +73,7 @@
     <div class="carousel-inner">
         <!-- First Slide: Header and Login Section -->
         <div class="carousel-item active">
-            <div class="header text-center mb-5">
+            <div class="header text-center">
                 <div>
                     <h1 class="display-1">Welcome to COTS Tracker</h1>
                 </div>
