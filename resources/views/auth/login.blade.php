@@ -124,7 +124,6 @@
         <div class="carousel-item">
     <div class="container my-5">
         <!-- Section Title -->
-        <h2 class="text-center mb-4 fw-bold text-primary">Most Dangerous Species</h2>
         <div class="row g-4 justify-content-center">
             <!-- Species Images -->
             <div class="col-md-4">

@@ -109,14 +109,17 @@
                                         By clicking <strong>"I Agree"</strong>, you consent to the collection and processing of your data for research and monitoring purposes, in accordance with applicable data privacy laws.
                                     </p>
                                     <div class="row g-2 my-3">
-                                        <div class="col-4">
+                                        <div class="col-6">
                                             <img src="{{ asset('images/img1.jpg') }}" class="img-fluid rounded" alt="Species 1">
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-6">
                                             <img src="{{ asset('images/img2.jpg') }}" class="img-fluid rounded" alt="Species 2">
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-6">
                                             <img src="{{ asset('images/img3.jpg') }}" class="img-fluid rounded" alt="Species 3">
+                                        </div>
+                                        <div class="col-6">
+                                            <img src="{{ asset('images/img4.jpg') }}" class="img-fluid rounded" alt="Species 3">
                                         </div>
                                     </div>
 
