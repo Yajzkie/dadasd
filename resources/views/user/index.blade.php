@@ -134,143 +134,271 @@
                             </div>
                         </div>
                     </div>
+                    <form action="{{ route('user-save-location') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <!-- Modal 1: Sighting Details -->
+    <div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="modal1Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal1Label">Sighting Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <div>
-                <h5 class="modal-title" id="locationModalLabel"></h5>
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="{{ route('user-save-location') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="modal-body">
-                <!-- Form Fields -->
-                <div class="form-group">
-                    <label for="name">Name: (Ngalan)</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="optional">
-                </div>
-                <div class="form-group">
-                    <label for="date_of_sighting">Date of COTS Sighting: (Petsa sa Pagkakita sa COTS)</label>
-                    <input type="date" class="form-control" id="date_of_sighting" name="date_of_sighting" required>
-                </div>
-                <div class="form-group">
-                    <label for="time_of_sighting">Time of COTS Sighting: (Oras sa Pagkakita sa COTS)</label>
-                    <input type="time" class="form-control" id="time_of_sighting" name="time_of_sighting" required>
-                </div>
-                <div class="form-group">
-                    <label for="municipality">Municipality Where COTS sighted (Munisipyo diin nakita ang COTS)</label>
-                    <select class="form-control" id="municipality" name="municipality" required>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="optional">
+                    </div>
+                    <div class="form-group">
+                        <label for="date_of_sighting">Date of COTS Sighting:</label>
+                        <input type="date" class="form-control" id="date_of_sighting" name="date_of_sighting" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time_of_sighting">Time of COTS Sighting:</label>
+                        <input type="time" class="form-control" id="time_of_sighting" name="time_of_sighting" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="municipality">Municipality:</label>
+                        <select class="form-control" id="municipality" name="municipality" required>
                             <option value="">Select Municipality</option>
-                            <option value="Bontoc">Bontoc</option>
-                            <option value="Tomas Oppus">Tomas Oppus</option> 
-                            <option value="Sogod">Sogod</option>
-                            <option value="Malitbog">Malitbog</option>
-                            <option value="Liloan">Liloan</option>
-                            <option value="Libagon">Libagon</option>
-                            <option value="Padre burgos">Padre Burgos</option>
-                            <option value="San Francisco">San Francisco</option>
-                            <option value="Limasawa">Limasawa</option>
-                            <option value="Panaon">Panaon</option>
-                    </select>
+                            <!-- Municipalities will be populated here -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="barangay">Barangay:</label>
+                        <select class="form-control" id="barangay" name="barangay" required>
+                            <option value="">Select Barangay</option>
+                            <!-- Barangays will be populated here -->
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="barangay">Barangay:</label>
-                    <input type="text" class="form-control" id="barangay" name="barangay" required>
-                </div>
-                <div class="form-group d-flex align-items-center justify-content-between" style="margin-top: 15px;">
-                    <label class="me-3" style="min-width: 150px;">Size of COTS inside a <br>10 x 10m area(kadak-on sa COTS)</label>
-                    <label class="me-3" style="min-width: 150px;">Number  of COTS inside a <br>10 x 10m area(kadaghanon sa COTS)</label>
-                </div>
-
-                <!-- Add margin-top to space out the "Early Juvenile" field -->
-                <div class="form-group d-flex align-items-center justify-content-between" style="margin-top: 15px;">
-                    <label for="early_juvenile" class="me-3" style="min-width: 150px;">1-5cm:</label>
-                    <input type="number" class="form-control" id="early_juvenile" name="early_juvenile" min="1"  placeholder="Enter number of COTS">
-                </div>
-
-                <div class="form-group d-flex align-items-center justify-content-between">
-                    <label for="juvenile" class="me-3" style="min-width: 150px;">6-15cm:</label>
-                    <input type="number" class="form-control" id="juvenile" name="juvenile" min="0"  placeholder="Enter number of COTS">
-                </div>
-                <div class="form-group d-flex align-items-center justify-content-between">
-                    <label for="sub_adult" class="me-3" style="min-width: 150px;">15-25cm:</label>
-                    <input type="number" class="form-control" id="sub_adult" name="sub_adult" min="0"  placeholder="Enter number of COTS">
-                </div>
-                <div class="form-group d-flex align-items-center justify-content-between">
-                    <label for="adult" class="me-3" style="min-width: 150px;">25-35cm:</label>
-                    <input type="number" class="form-control" id="adult" name="adult" min="0"  placeholder="Enter number of COTS">
-                </div>
-                <div class="form-group d-flex align-items-center justify-content-between">
-                    <label for="adult" class="me-3" style="min-width: 150px;">>35cm:</label>
-                    <input type="number" class="form-control" id="late_adult" name="late_adult" min="0"  placeholder="Enter number of COTS">
-                </div>
-                <div class="form-group d-flex align-items-center justify-content-between">
-                    <label for="adult" class="me-3" style="min-width: 150px;">Total Cots:</label>
-                    <input type="number" class="form-control" id="number_of_cots" name="number_of_cots" min="0" >
-                </div>
-                <div class="form-group">
-                    <label for="activity_type">Type of Activity: (Tipo sa Aktibidad)</label>
-                    <select class="form-control" id="activity_type" name="activity_type" required>
-                        <option value="">Select Activity</option>
-                        <option value="Fishing">Fishing: spearfishing / Gleaning</option>
-                        <option value="Recreational diving">Recreational: Scuba Diving / Snorkeling / Free Diving / Swimming</option>
-                        <option value="Research">Research</option>
-                        <option value="Cots collection">COTS Collection</option>
-                        <option value="other">Other</option>
-                    </select>
-                    <!-- Custom input for "Other" activity -->
-                    <input type="text" class="form-control mt-2 d-none" id="custom_activity" name="custom_activity" placeholder="Please specify activity">
-                </div>
-                <div class="form-group">
-                    <label for="observer_category">Observer Category: (Kategoriya sa Obserbador)</label>
-                    <select class="form-control" id="observer_category" name="observer_category" required>
-                        <option value="">Select Observer Category</option>
-                        <option value="Fisherfolks">Fisherfolks</option>
-                        <option value="Barangay residents">Barangay Residents</option>
-                        <option value="Local government">Local Government Unit (LGU)</option>
-                        <option value="Advocacy groups">Advocacy Group (ex. Dap-ag Boys)</option>
-                        <option value="Researcher">Researcher</option>
-                        <option value="other">Other</option>
-                    </select>
-                    <!-- Custom input for "Other" observer -->
-                    <input type="text" class="form-control mt-2 d-none" id="custom_observer" name="custom_observer" placeholder="Please specify observer category">
-                </div>
-                <div class="form-group">
-                    <label for="latitude">Latitude: (Latitud)</label>
-                    <input type="number" step="any" class="form-control" id="latitude" name="latitude" required>
-                </div>
-                <div class="form-group">
-                    <label for="longitude">Longitude: (Longhitud)</label>
-                    <input type="number" step="any" class="form-control" id="longitude" name="longitude" required>
-                </div>
-                <div class="form-group">
-                    <label for="photo">Photos: (Litrato)</label>
-                    <input type="file" class="form-control" id="photo" name="photo[]" accept="image/*" multiple>
-                    <div id="photo-previews" class="mt-3"></div> <!-- Previews for the selected images -->
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Additional Comments or Observations: (Dugang nga mga Komentaryo o Observasyon)</label>
-                    <textarea class="form-control" id="description" name="description"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save Location</button>
-            </div>
-        </form>
-    </div>
-</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="nextBtn1">Next</button>
 
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modal 2: COTS Count -->
+    <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal2Label">COTS Count</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="early_juvenile">1-5cm:</label>
+                        <input type="number" class="form-control" id="early_juvenile" name="early_juvenile" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="juvenile">6-15cm:</label>
+                        <input type="number" class="form-control" id="juvenile" name="juvenile" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="sub_adult">15-25cm:</label>
+                        <input type="number" class="form-control" id="sub_adult" name="sub_adult" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="adult">25-35cm:</label>
+                        <input type="number" class="form-control" id="adult" name="adult" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="late_adult">>35cm:</label>
+                        <input type="number" class="form-control" id="late_adult" name="late_adult" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="number_of_cots">Total COTS:</label>
+                        <input type="number" class="form-control" id="number_of_cots" name="number_of_cots" min="0">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="backBtn2">Back</button>
+                <button type="button" class="btn btn-primary" id="nextBtn2">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Activity & Observer Info -->
+    <div class="modal fade" id="modal3" tabindex="-1" aria-labelledby="modal3Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal3Label">Activity & Observer Info</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="activity_type">Type of Activity:</label>
+                        <select class="form-control" id="activity_type" name="activity_type" required>
+                            <option value="">Select Activity</option>
+                            <option value="Fishing">Fishing</option>
+                            <option value="Recreational diving">Recreational Diving</option>
+                            <option value="Research">Research</option>
+                            <option value="Cots collection">COTS Collection</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <input type="text" class="form-control mt-2 d-none" id="custom_activity" name="custom_activity" placeholder="Please specify activity">
+                    </div>
+                    <div class="form-group">
+                        <label for="observer_category">Observer Category:</label>
+                        <select class="form-control" id="observer_category" name="observer_category" required>
+                            <option value="">Select Observer</option>
+                            <option value="Fisherfolks">Fisherfolks</option>
+                            <option value="Barangay residents">Barangay Residents</option>
+                            <option value="Local government">Local Government</option>
+                            <option value="Advocacy groups">Advocacy Group</option>
+                            <option value="Researcher">Researcher</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <input type="text" class="form-control mt-2 d-none" id="custom_observer" name="custom_observer" placeholder="Please specify observer">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="backBtn3">Back</button>
+                <button type="button" class="btn btn-primary" id="nextBtn3">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Location & Media -->
+    <div class="modal fade" id="modal4" tabindex="-1" aria-labelledby="modal4Label" aria-hidden="true">
+        <div class="modal-dialog"> 
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal4Label">Location & Media</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Latitude:</label>
+                        <p id="latitude_display">Not selected</p>
+                        <input type="hidden" id="latitude" name="latitude" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Longitude:</label>
+                        <p id="longitude_display">Not selected</p>
+                        <input type="hidden" id="longitude" name="longitude" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="photo">Photos:</label>
+                        <input type="file" class="form-control" id="photo" name="photo[]" accept="image/*" multiple>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Additional Comments:</label>
+                        <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="backBtn4">Back</button>
+                <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+                </form>   
+            </div>
+        </div>
+    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+    // Fetch and display municipalities in Southern Leyte
+    function populateMunicipalities() {
+        fetch('https://psgc.gitlab.io/api/provinces/086400000/municipalities/')
+            .then(response => response.json())
+            .then(data => {
+                const municipalitySelect = document.getElementById('municipality');
+                municipalitySelect.innerHTML = '<option value="">Select Municipality</option>';
+                data.forEach(municipality => {
+                    const option = document.createElement('option');
+                    option.value = municipality.name; // Use municipality name as the value
+                    option.textContent = municipality.name; // Municipality name
+                    municipalitySelect.appendChild(option);
+                });
+
+                // Load previously selected municipality from localStorage
+                const savedMunicipality = localStorage.getItem('municipality');
+                if (savedMunicipality) {
+                    municipalitySelect.value = savedMunicipality;
+                    populateBarangays(savedMunicipality);
+                }
+            })
+            .catch(error => console.error('Error fetching municipalities:', error));
+    }
+
+    // Fetch and display barangays of selected municipality
+    function populateBarangays(municipalityName) {
+        fetch('https://psgc.gitlab.io/api/provinces/086400000/municipalities/')
+            .then(response => response.json())
+            .then(data => {
+                const municipality = data.find(municipality => municipality.name === municipalityName);
+                if (municipality) {
+                    const municipalityCode = municipality.code;
+                    fetch(`https://psgc.gitlab.io/api/municipalities/${municipalityCode}/barangays/`)
+                        .then(response => response.json())
+                        .then(barangays => {
+                            const barangaySelect = document.getElementById('barangay');
+                            barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
+                            barangays.forEach(barangay => {
+                                const option = document.createElement('option');
+                                option.value = barangay.name; // Use barangay name as the value
+                                option.textContent = barangay.name; // Barangay name
+                                barangaySelect.appendChild(option);
+                            });
+
+                            // Load previously selected barangay from localStorage
+                            const savedBarangay = localStorage.getItem('barangay');
+                            if (savedBarangay) {
+                                barangaySelect.value = savedBarangay;
+                            }
+                        })
+                        .catch(error => console.error('Error fetching barangays:', error));
+                }
+            })
+            .catch(error => console.error('Error fetching municipalities:', error));
+    }
+
+    // Event listener for municipality selection
+    document.addEventListener('DOMContentLoaded', () => {
+        // Set up event listener to store selected municipality name in localStorage
+        document.getElementById('municipality').addEventListener('change', function () {
+            const municipalityName = this.value; // Get selected municipality name
+            localStorage.setItem('municipality', municipalityName); // Save name to localStorage
+            if (municipalityName) {
+                populateBarangays(municipalityName);
+            } else {
+                document.getElementById('barangay').innerHTML = '<option value="">Select Barangay</option>';
+                localStorage.removeItem('barangay'); // Clear selected barangay
+            }
+        });
+
+        // Set up event listener to store selected barangay name in localStorage
+        document.getElementById('barangay').addEventListener('change', function () {
+            const barangayName = this.value; // Get selected barangay name
+            localStorage.setItem('barangay', barangayName); // Save name to localStorage
+        });
+
+        populateMunicipalities(); // Load Southern Leyte municipalities on page load
+    });
+</script>
+
+
+
+  
+  
     <!-- Core JS -->
     <script src="{{ asset('assets/vendor/libs/jquery/jquery.js')}}"></script>
     <script src="{{ asset('assets/vendor/libs/popper/popper.js')}}"></script>
@@ -279,6 +407,51 @@
     <script src="{{ asset('assets/vendor/js/menu.js')}}"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.74.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+
+
+    <script>
+    function switchModal(hideId, showId) {
+        let hideModal = bootstrap.Modal.getInstance(document.getElementById(hideId));
+        if (hideModal) hideModal.hide();
+        
+        let showModal = new bootstrap.Modal(document.getElementById(showId));
+        showModal.show();
+    }
+
+    document.getElementById("nextBtn1").addEventListener("click", function () {
+        let date = document.getElementById("date_of_sighting").value;
+        let time = document.getElementById("time_of_sighting").value;
+        let municipality = document.getElementById("municipality").value;
+        let barangay = document.getElementById("barangay").value;
+
+        if (date === "" || time === "" || municipality === "" || barangay === "") {
+            alert("Please fill out all required fields.");
+        } else {
+            switchModal('modal1', 'modal2');
+        }
+    });
+
+    document.getElementById("backBtn2").addEventListener("click", function () {
+        switchModal('modal2', 'modal1');
+    });
+
+    document.getElementById("nextBtn2").addEventListener("click", function () {
+        switchModal('modal2', 'modal3');
+    });
+
+    document.getElementById("backBtn3").addEventListener("click", function () {
+        switchModal('modal3', 'modal2');
+    });
+
+    document.getElementById("nextBtn3").addEventListener("click", function () {
+        switchModal('modal3', 'modal4');
+    });
+
+    document.getElementById("backBtn4").addEventListener("click", function () {
+        switchModal('modal4', 'modal3');
+    });
+</script>
+
 
     <script>
     // Initialize the map
@@ -378,6 +551,11 @@ map.on('click', function (e) {
         document.getElementById('latitude').value = clickedPoint.lat;
         document.getElementById('longitude').value = clickedPoint.lng;
 
+
+        document.getElementById('latitude_display').textContent = clickedPoint.lat.toFixed(6);
+        document.getElementById('longitude_display').textContent = clickedPoint.lng.toFixed(6);
+
+
         // Show the consent modal
         $('#consentModal').modal('show');
     } else {
@@ -388,7 +566,7 @@ map.on('click', function (e) {
 // Handle "Agree" button click in consent modal
 document.getElementById('agreeConsent').addEventListener('click', function () {
     $('#consentModal').modal('hide'); // Hide consent modal
-    $('#locationModal').modal('show'); // Show location modal
+    $('#modal1').modal('show'); // Show location modal
 });
 
 // Handle "Cancel" button in consent modal
