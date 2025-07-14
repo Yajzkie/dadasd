@@ -6,7 +6,7 @@
 <div class="card shadow-sm mt-4">
     <div class="card-header d-flex justify-content-between align-items-center bg-dark text-white p-3 rounded-top">
         <h5 class="m-0">
-            <i class="bx bx-map"></i> Location Report
+            <i class="bx bx-map"></i> Sightings Report
         </h5>
         <a href="{{ route('admin.report.export', ['municipality' => request('municipality')]) }}" class="btn btn-success">
             <i class="bx bx-download"></i> Export

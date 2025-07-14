@@ -17,7 +17,7 @@
         <li class="menu-item">
             <a href="{{ route('user.index') }}" class="menu-link text-dark hover-bg-primary hover-text-white text-decoration-none">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Dashboard</div>
+                <div data-i18n="Analytics">Sightings Map</div>
             </a>
         </li>
         <li class="menu-item mt-4">

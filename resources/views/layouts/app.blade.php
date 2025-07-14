@@ -78,10 +78,9 @@
         #map {
             height: 100%;
             position: relative;
-            margin: 0 auto;
+            margin: 10% auto 0 auto;
             width: 90%;
-            height: 50%;
-            margin-top: 0px;
+            height: 10%;
             margin-left: 50px;
         }
 
@@ -114,6 +113,32 @@
         .navbar-toggler {
             border-color: transparent;
         }
+        .page-header {
+        position: fixed;
+        top: 70px; /* adjust based on navbar height */
+        left: 300px;
+        width: 100%;
+        background-color: #fff;
+        z-index: 998;
+        padding: 10px 0;
+    }
+
+    .page-header h1 {
+        margin: 0;
+        font-size: 1.8rem;
+        color: #333;
+        font-weight: 700;
+    }
+
+    .page-header .description {
+        margin: 5px 0 0 0;
+        font-size: 1rem;
+        color: #666;
+    }
+
+    .layout-page {
+        margin-top: 160px; /* leave space for navbar + fixed title */
+    }
     </style>
 </head>
 <body>
@@ -143,7 +168,7 @@
         </ul>
     </div>
 </nav>
-
+ 
 <!-- Page Content -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">

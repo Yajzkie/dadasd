@@ -87,10 +87,16 @@
         color: #004494;
     }
 </style>
+
+<div class="page-header">
+    <h1>COTS Sighting Map</h1>
+    <p class="description">View all reported Crown-of-thorns Starfish (COTS) Sightings on the interactive map. Help protect our reefs by adding pin to report new sighting in your area.</p>
+</div>
+
 <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
                 <div class="content-wrapper">
-                 <div id="map" style="height: 100%; position: relative; margin: 0 auto; "></div>
+                 <div id="map" style="height: 80%; position: relative; margin: 0 auto; "></div>
                  <div class="modal fade" id="consentModal" tabindex="-1" aria-labelledby="consentModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                             <div class="modal-content">

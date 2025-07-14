@@ -22,7 +22,7 @@
         <li class="menu-item {{ Route::is('admin.location') ? 'active' : '' }}">
             <a href="{{ route('admin.location') }}" class="menu-link text-dark hover-bg-primary hover-text-white text-decoration-none">
                 <i class="menu-icon tf-icons bx bx-location-plus"></i>
-                <div data-i18n="Locations">Locations</div>
+                <div data-i18n="Locations">Sightings Map</div>
             </a>
         </li>
         <li class="menu-item {{ Route::is('admin.report') ? 'active' : '' }}">
