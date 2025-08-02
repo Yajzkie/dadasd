@@ -19,6 +19,12 @@
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
+        <li class="menu-item {{ Route::is('admin.download') ? 'active' : '' }}">
+            <a href="{{ route('admin.download') }}" class="menu-link text-dark hover-bg-primary hover-text-white text-decoration-none">
+                <i class="menu-icon tf-icons bx bx-upload"></i>
+                <div data-i18n="Locations">Download</div>
+            </a>
+        </li>
         <li class="menu-item {{ Route::is('admin.location') ? 'active' : '' }}">
             <a href="{{ route('admin.location') }}" class="menu-link text-dark hover-bg-primary hover-text-white text-decoration-none">
                 <i class="menu-icon tf-icons bx bx-location-plus"></i>

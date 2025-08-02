@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\UserDownloadController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\UserLocationController;
@@ -12,6 +14,7 @@ use App\Exports\LocationsReportExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 // Redirect root to login page
+
 Route::get('/', function () {
     return redirect('/login');
 });
@@ -25,6 +28,7 @@ Route::post('/logout', [LoginController::class, 'signOut'])->name('logout');
 Route::middleware('admin')->group(function () {
     // Dashboard and Location Routes
     Route::get('/admin/index', [AdminDashboardController::class, 'index'])->name('admin.index');
+    Route::get('/download', [DownloadController::class, 'index'])->name('admin.download');
     Route::post('/save-location', [LocationController::class, 'store'])->name('save-location');
     Route::get('/admin/locations', [LocationController::class, 'index'])->name('admin.location');
     Route::delete('/locations/{id}', [LocationController::class, 'destroy'])->name('locations.destroy');
@@ -41,6 +45,8 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/adduser/users', [UserController::class, 'store'])->name('users.store'); // Route for storing user
     Route::get('/admin/adduser/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit'); // Route for editing user
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.adduser');
+
+
 
     Route::get('/admin/municipal/create', [MunicipalityController::class, 'create'])->name('admin.municipal.create');
     Route::post('/admin/municipal', [MunicipalityController::class, 'store'])->name('admin.municipal.store');
@@ -59,6 +65,7 @@ Route::middleware(['user','auth'])->group(function () {
     Route::get('/user/locations', [UserLocationController::class, 'index'])->name('user.locations');
     Route::post('/user/locations', [UserLocationController::class, 'store'])->name('user-save-location');
     Route::get('user/index', [UserLocationController::class, 'index'])->name('user.index');
+        Route::get('/user/download', [UserDownloadController::class, 'index'])->name('user.download');
 });
 
 

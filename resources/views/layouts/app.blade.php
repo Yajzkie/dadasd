@@ -160,6 +160,7 @@
                     <li><a class="dropdown-item" href="#">New location added in:</a></li>
                 </ul>
             </li>
+
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <span class="user-role">
                     {{ Auth::user()->role->role_name }}

@@ -20,6 +20,12 @@
                 <div data-i18n="Analytics">Sightings Map</div>
             </a>
         </li>
+                <li class="menu-item {{ Route::is('user.download') ? 'active' : '' }}">
+            <a href="{{ route('user.download') }}" class="menu-link text-dark hover-bg-primary hover-text-white text-decoration-none">
+                <i class="menu-icon tf-icons bx bx-upload"></i>
+                <div data-i18n="Locations">Download</div>
+            </a>
+        </li>
         <li class="menu-item mt-4">
             <a href="{{ route('logout') }}" class="menu-link text-dark hover-bg-primary hover-text-white text-decoration-none" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="menu-icon tf-icons bx bx-log-out"></i>
